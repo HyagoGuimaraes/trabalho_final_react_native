@@ -5,20 +5,39 @@ import { ButtonLogin } from "../Button/Login";
 import { ButtonForgot } from "../Button/Forgot";
 
 
-export const CardLogin = () => {
+export const CardRegister = () => {
   const navigation = useNavigation();
 
-  const login = () => {
-    navigation.navigate("StackHome");
+  
+
+  const cadastrar = () => {
+    navigation.navigate("StackLogin");
   };
 
   return (
     <View style={styles.card}>
       <View style={styles.inputContainer}>
         <TextInput
+          placeholderTextColor={"black"}
+          placeholder="Nome"
+          style={styles.input}
+        />
+        <TextInput
+          placeholderTextColor={"black"}
+          placeholder="Sobrenome"
+          style={styles.input}
+        />
+
+        <TextInput
           keyboardType="email-address"
           placeholderTextColor={"black"}
           placeholder="E-mail"
+          style={styles.input}
+        />
+        <TextInput
+          keyboardType="email-address"
+          placeholderTextColor={"black"}
+          placeholder="Confirma E-mail"
           style={styles.input}
         />
 
@@ -28,15 +47,19 @@ export const CardLogin = () => {
           placeholder="Senha"
           style={styles.input}
         />
+        <TextInput
+          secureTextEntry={true}
+          placeholderTextColor={"black"}
+          placeholder="Confirma senha"
+          style={styles.input}
+        />
       </View>
 
       <View style={styles.button}>
-        <ButtonLogin titulo="Entrar" onPressAction={login}/>
+        <ButtonLogin titulo='Cadastrar' onPressAction={cadastrar}/>
       </View>
         
-      <View style={styles.button}>
-        <ButtonForgot />
-      </View>
+      
     </View>
   );
 };

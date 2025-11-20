@@ -2,16 +2,20 @@ import { useNavigation } from "@react-navigation/native";
 import { Text, TouchableOpacity } from "react-native";
 import { styles } from "./style";
 
-export const ButtonLogin = () => {
+  interface ButtonLoginProps {
+    titulo: string;
+    onPressAction: () => void;
+  }
+export const ButtonLogin = ({titulo, onPressAction}: ButtonLoginProps) => {
   const navigation = useNavigation();
 
-  const login = () => {
-    navigation.navigate("StackHome");
-  };
+  
+
+
 
   return (
-    <TouchableOpacity onPress={login} style={styles.button}>
-      <Text style={styles.text}>Entrar</Text>
+    <TouchableOpacity onPress={onPressAction} style={styles.button}>
+      <Text style={styles.text}>{titulo}</Text>
     </TouchableOpacity>
   );
 };
