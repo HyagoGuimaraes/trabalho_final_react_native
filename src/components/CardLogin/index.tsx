@@ -1,15 +1,28 @@
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import { styles } from "./style";
 import { useNavigation } from "@react-navigation/native";
-import { ButtonLogin } from "../Button/Login";
+import { Alert, TextInput, View } from "react-native";
+import { useAuth } from "../../Auth/useAuth";
 import { ButtonForgot } from "../Button/Forgot";
-
+import { ButtonLogin } from "../Button/Login";
+import { styles } from "./style";
 
 export const CardLogin = () => {
   const navigation = useNavigation();
 
-  const login = () => {
-    navigation.navigate("StackHome");
+  const {email,password,setEmail,setPassword, login} = useAuth ();
+
+  const checkLogin = async () => {
+    
+    if(!email || !password){
+      Alert.alert("Por favor, preencha todos os campos.")
+      return
+    }
+    
+    const response = await login(email, password);
+    if(response){
+      Alert.alert("Bem Vindo!")
+      setTimeout(() => {navigation.navigate('StackHome')}, 2000)
+    } 
+
   };
 
   return (
@@ -20,6 +33,8 @@ export const CardLogin = () => {
           placeholderTextColor={"black"}
           placeholder="E-mail"
           style={styles.input}
+          value={email}
+          onChangeText={setEmail}
         />
 
         <TextInput
@@ -27,11 +42,13 @@ export const CardLogin = () => {
           placeholderTextColor={"black"}
           placeholder="Senha"
           style={styles.input}
+          value={password}
+          onChangeText={setPassword}
         />
       </View>
 
       <View style={styles.button}>
-        <ButtonLogin titulo="Entrar" onPressAction={login}/>
+        <ButtonLogin titulo="Entrar" onPressAction={checkLogin}/>
       </View>
         
       <View style={styles.button}>
