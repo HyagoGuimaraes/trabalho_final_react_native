@@ -10,11 +10,8 @@ interface PropsAuth {
   setPassword: (value: string) => void;
   login: (email: string, password: string) => Promise<boolean>;
   getData: () => Promise<boolean>;
-}
-
-interface PropsApi {
-  password: string;
-  email: string;
+  user: PropsUser | null; 
+  setUser: (user: PropsUser | null) => void;
 }
 
 interface PropsUser {
@@ -30,7 +27,9 @@ const AuthContext = createContext<PropsAuth>({
   password: '',
   setPassword: () => {},
   login: async () => false,
-  getData: async () => false
+  getData: async () => false,
+  user: null,
+  setUser: () => {}
 })
 
 interface AuthProps {
@@ -55,8 +54,14 @@ export const AuthProvider = ({children}: AuthProps) => {
     try {
       const value = await AsyncStorage.getItem('@user')
       if(value){
+        const userStorage: PropsUser = JSON.parse(value)
+        setUser(userStorage)
         return true
-      } else return false
+      } 
+      else {
+        setUser(null)
+        return false
+      } 
     } catch (error) {
       return false
     }
@@ -66,7 +71,8 @@ export const AuthProvider = ({children}: AuthProps) => {
       
     const response = await LoginUser();
     const users = response?.data
-    const foundUser = users.find((user: PropsApi) => user.email === email && user.password === password)
+    const foundUser = users.find((user: PropsUser) => user.email === email && user.password === password)
+    
     if(foundUser){
       setUser(foundUser)
       saveData(foundUser)
@@ -78,12 +84,9 @@ export const AuthProvider = ({children}: AuthProps) => {
       return false
     } 
   }
-    
-  
-
 
   return (
-    <AuthContext.Provider value={{email, setEmail, password, setPassword, login, getData}}>
+    <AuthContext.Provider value={{email, setEmail, password, setPassword, login, getData, setUser, user}}>
       {children}
     </AuthContext.Provider>
   )
