@@ -1,12 +1,26 @@
 import { useNavigation } from "@react-navigation/native";
-import { Text, TouchableOpacity, View } from "react-native";
-import { CardLogin } from "../../components/CardLogin";
-import { styles } from "./style";
 import { LinearGradient } from "expo-linear-gradient";
+import { useEffect } from "react";
+import { View } from "react-native";
+import { useAuth } from "../../Auth/useAuth";
+import { CardLogin } from "../../components/CardLogin";
 import { FooterLogin } from "../../components/FooterLogin";
+import { styles } from "./style";
+
 
 export const Login = () => {
   
+  const {getData, user} = useAuth();
+  const navigation = useNavigation();
+
+  useEffect(() => {getData()}, [])
+
+  useEffect(() => {
+    if(user) {
+      navigation.navigate("StackHome")
+    }
+  }, [user, navigation])
+
   return (
     <View style={styles.container}>
       <LinearGradient

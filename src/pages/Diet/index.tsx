@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { searchFoodApi } from "../../service";
+import { searchFoodApi } from "../../service/Api";
 import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./style";
 import { FoodSearchInput } from "../../components/FoodSearchInput";

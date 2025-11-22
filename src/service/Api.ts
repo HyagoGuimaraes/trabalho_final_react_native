@@ -1,4 +1,10 @@
-import axios from 'axios';
+import axios from "axios";
+
+export const baseUrl = "https://68dda582d7b591b4b78d02ee.mockapi.io/Native";
+
+export const Api = axios.create({
+    baseURL: baseUrl
+})
 
 const OPEN_FOOD_FACTS_URL = "https://world.openfoodfacts.org/api/v0/product/";
 
@@ -27,3 +33,4 @@ export const searchFoodApi = async (query: string): Promise<FoodItem[]> => {
         return [];
     }
 };
+
