@@ -5,8 +5,9 @@ import { styles } from "./style";
   interface ButtonLoginProps {
     titulo: string;
     onPressAction: () => void;
+    disabled?: boolean
   }
-export const ButtonLogin = ({titulo, onPressAction}: ButtonLoginProps) => {
+export const ButtonLogin = ({titulo, onPressAction, disabled}: ButtonLoginProps) => {
   const navigation = useNavigation();
 
   
@@ -14,7 +15,7 @@ export const ButtonLogin = ({titulo, onPressAction}: ButtonLoginProps) => {
 
 
   return (
-    <TouchableOpacity onPress={onPressAction} style={styles.button}>
+    <TouchableOpacity onPress={onPressAction} style={styles.button} disabled={disabled}>
       <Text style={styles.text}>{titulo}</Text>
     </TouchableOpacity>
   );
