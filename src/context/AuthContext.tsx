@@ -1,11 +1,10 @@
-import React  from 'react';
-import { createContext, ReactNode, useState } from "react";
+import { createContext, useState } from "react";
 
 export const AuthContext = createContext<AuthContextProps>({
     saveDiet: () => {},
 });
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({ children }: any) => {
     const [diet, setDiet] = useState<Record<RefeicoesHorario, RefeicoesItem[]>>({
         cafe: [],
         almoco: [],

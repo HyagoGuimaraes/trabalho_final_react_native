@@ -1,4 +1,4 @@
-import { Api } from "./Api";
+import { Api } from "./api";
 
 interface PropsRegister {
   name: string;

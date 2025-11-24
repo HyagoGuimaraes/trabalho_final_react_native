@@ -1,7 +1,6 @@
-import React  from 'react';
+import { useNavigation } from "@react-navigation/native";
 import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./style";
-import { useNavigation } from "@react-navigation/native";
 
 export const FooterLogin = () => {
   const navigation = useNavigation();
