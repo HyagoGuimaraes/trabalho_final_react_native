@@ -1,3 +1,4 @@
+import React  from 'react';
 import { useContext, useState } from "react";
 import { searchFoodApi } from "../../service/Api";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -8,7 +9,6 @@ import { FoodResultsList } from "../../components/FoodResultsList";
 import { SelectedFoodsList } from "../../components/SelectedFoodsList";
 import { AuthContext } from "../../context/AuthContext";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 
 const REFEICOES: { key: RefeicoesHorario; label: string }[] = [
     { key: 'cafe', label: 'Café da manhã' },

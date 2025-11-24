@@ -1,3 +1,4 @@
+import React  from 'react';
 import { StatusBar } from 'react-native';
 import { Routers } from './src/routers';
 import { AuthProvider } from './src/context/AuthContext';
