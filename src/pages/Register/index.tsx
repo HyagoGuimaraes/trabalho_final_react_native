@@ -1,8 +1,7 @@
-import React from 'react';
-import { LinearGradient } from "expo-linear-gradient"
-import { Text, View } from "react-native"
-import { CardRegister } from "../../components/CardRegister"
-import { styles } from "./style"
+import { LinearGradient } from "expo-linear-gradient";
+import { View } from "react-native";
+import { CardRegister } from "../../components/CardRegister";
+import { styles } from "./style";
 
 export const Register = () => {
   return (
