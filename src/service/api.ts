@@ -1,39 +1,36 @@
-import type {
-  UserProfile,
-  DailySummary,
-  DietaryPreference,
-} from "../@types/user";
+import axios from "axios";
 
-const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
+export const baseUrl = "https://68dda582d7b591b4b78d02ee.mockapi.io/Native";
 
-export const fetchUserProfile = async (): Promise<UserProfile> => {
-  await delay(400);
-  const prefs: DietaryPreference[] = ["onivoro", "low_carb"];
-  return {
-    id: "u_001",
-    name: "William Lippi",
-    email: "lippiwilliam93@gmail.com",
-    avatar: "https://i.pravatar.cc/180?img=12",
-    weightKg: 84,
-    goalWeightKg: 78,
-    dailyCaloriesGoal: 2200,
-    dietaryPreferences: prefs,
-  };
+export const Api = axios.create({
+    baseURL: baseUrl
+})
+
+const OPEN_FOOD_FACTS_URL = "https://world.openfoodfacts.org/api/v0/product/";
+
+export const searchFoodApi = async (query: string): Promise<FoodItem[]> => {
+    try {
+        const response = await axios.get<{ products: OpenFoodFactsResponse[] }>
+            (`https://world.openfoodfacts.org/cgi/search.pl`, {
+                params: {
+                    search_terms: query,
+                    search_simple: 1,
+                    action: "process",
+                    json: 1
+                },
+            });
+
+        return response.data.products
+        .filter((item) => item.product_name && item.nutriments["energy-kcal_100g"])
+        .map((item, index) => ({
+            id: String(item._id ?? index),
+            name: item.product_name || "Sem nome",
+            calories: item.nutriments["energy-kcal_100g"] ?? 0,
+        }));
+
+    } catch (error) {
+        console.error("Erro ao buscar no OpenFoodFacts:", error);
+        return [];
+    }
 };
 
-export const fetchTodaySummary = async (): Promise<DailySummary> => {
-  await delay(300);
-  const today = new Date().toISOString().slice(0, 10);
-  return {
-    dateISO: today,
-    caloriesConsumed: 1360,
-    proteinG: 98,
-    carbsG: 120,
-    fatG: 55,
-  };
-};
-
-export const updateProfileAPI = async (partial: Partial<UserProfile>) => {
-  await delay(300);
-  return partial;
-};
