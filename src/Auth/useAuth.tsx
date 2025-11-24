@@ -11,7 +11,6 @@ interface PropsAuth {
   login: (email: string, password: string) => Promise<boolean>;
   getData: () => Promise<boolean>;
   user: PropsUser | null; 
-  setUser: (user: PropsUser | null) => void;
 }
 
 interface PropsUser {
@@ -29,13 +28,12 @@ const AuthContext = createContext<PropsAuth>({
   login: async () => false,
   getData: async () => false,
   user: null,
-  setUser: () => {}
 })
 
 interface AuthProps {
   children: React.ReactNode
 }
-export const AuthProvider = ({children}: AuthProps) => {
+export const AuthProviders = ({children}: AuthProps) => {
   
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -86,7 +84,7 @@ export const AuthProvider = ({children}: AuthProps) => {
   }
 
   return (
-    <AuthContext.Provider value={{email, setEmail, password, setPassword, login, getData, setUser, user}}>
+    <AuthContext.Provider value={{email, setEmail, password, setPassword, login, getData, user}}>
       {children}
     </AuthContext.Provider>
   )

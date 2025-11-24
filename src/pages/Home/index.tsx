@@ -1,7 +1,6 @@
-import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./style";
 
 export default function Home() {

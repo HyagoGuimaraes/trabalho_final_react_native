@@ -1,4 +1,3 @@
-import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StackList } from '../@types/navigation';
 import { Login } from "../pages/Login";
