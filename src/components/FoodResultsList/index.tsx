@@ -1,3 +1,4 @@
+import React  from 'react';
 import { FlatList, Text, TouchableOpacity } from "react-native";
 import { styles } from './style';
 
