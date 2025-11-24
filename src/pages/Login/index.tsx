@@ -6,6 +6,7 @@ import { useAuth } from "../../Auth/useAuth";
 import { CardLogin } from "../../components/CardLogin";
 import { FooterLogin } from "../../components/FooterLogin";
 import { styles } from "./style";
+import React from "react";
 
 
 export const Login = () => {

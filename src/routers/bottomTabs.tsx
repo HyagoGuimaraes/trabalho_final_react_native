@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home } from "../pages/Home";
+import Home from "../pages/Home";
 import { TabList } from "../@types/navigation";
 import { DietPage } from "../pages/Diet";
 
@@ -19,3 +19,4 @@ export const TabsRouters = () => {
     </Tab.Navigator>
   );
 };
+
