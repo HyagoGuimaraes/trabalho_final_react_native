@@ -6,9 +6,10 @@ interface Props {
   refeicao: { key: RefeicoesHorario; label: string };
   items: RefeicoesItem[];
   onAddFood: () => void;
+  onRemoveFood: (horario: RefeicoesHorario, index: number) => void;
 }
 
-export const RefeicaoItem = ({ refeicao, items, onAddFood }: Props) => {
+export const RefeicaoItem = ({ refeicao, items, onAddFood, onRemoveFood }: Props) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -29,14 +30,19 @@ export const RefeicaoItem = ({ refeicao, items, onAddFood }: Props) => {
             <Text style={styles.emptyText}>Nenhum alimento</Text>
           ) : (
             items.map((item, index) => (
-              <Text key={index} style={styles.itemText}>
-                {item.alimento.name} ({item.alimento.calories} kcal)
-              </Text>
+              <View key={index} style={styles.itemRow}>
+                <Text style={styles.itemText}>
+                  {item.alimento.name} ({item.alimento.calories} kcal)
+                </Text>
+                <TouchableOpacity style={styles.removeButton} onPress={() => onRemoveFood(refeicao.key, index)}>
+                  <Text style={styles.removeText}>X</Text>
+                </TouchableOpacity>
+              </View>
             ))
           )}
         </View>
       )}
-      
+
     </View>
   );
 };

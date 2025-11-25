@@ -13,10 +13,14 @@ interface Props {
 export const AddFoodModal = ({ onClose, onSelectFood }: Props) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<FoodItem[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const searchFood = async () => {
+    if (!query.trim()) return;
+    setLoading(true);
     const foods = await searchFoodApi(query);
     setResults(foods);
+    setLoading(false);
   };
 
   return (
@@ -25,7 +29,7 @@ export const AddFoodModal = ({ onClose, onSelectFood }: Props) => {
         <Text style={styles.modalTitle}>Adicionar alimento</Text>
 
         <FoodSearchInput query={query} setQuery={setQuery} onSearch={searchFood} />
-        <FoodResultsList results={results} onSelectItem={onSelectFood} />
+        {loading ? <Text>Buscando...</Text> : <FoodResultsList results={results} onSelectItem={onSelectFood} />}
 
         <TouchableOpacity style={styles.modalClose} onPress={onClose}>
           <Text>Cancelar</Text>
