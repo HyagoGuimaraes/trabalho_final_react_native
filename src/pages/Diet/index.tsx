@@ -6,7 +6,7 @@ import { FoodSearchInput } from "../../components/FoodSearchInput";
 import { RefeicaoSelector } from "../../components/RefeicaoSelector";
 import { SelectedFoodsList } from "../../components/SelectedFoodsList";
 import { AuthContext } from "../../context/AuthContext";
-import { searchFoodApi } from "../../service/Api";
+import { searchFoodApi } from "../../service/api";
 import { styles } from "./style";
 
 const REFEICOES: { key: RefeicoesHorario; label: string }[] = [

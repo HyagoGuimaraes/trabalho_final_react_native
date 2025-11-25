@@ -26,6 +26,11 @@ export const saveDailySummary = async (summary: DailySummary | null) => {
   return AsyncStorage.setItem(KEYS.daily, JSON.stringify(summary));
 };
 
+export async function getUserStorage() {
+  const user = await AsyncStorage.getItem("user"); // Diego- Chave corrigi para o user. 
+  return user ? JSON.parse(user) : null;
+}
+
 export const loadDailySummary = async (): Promise<DailySummary | null> => {
   const raw = await AsyncStorage.getItem(KEYS.daily);
   if (!raw) return null;

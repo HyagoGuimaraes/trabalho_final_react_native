@@ -3,60 +3,54 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 15,
   },
 
-  card: {
-    width: "90%",
+  postContainer: {
     backgroundColor: "#fff",
-    padding: 30,
-    borderRadius: 30,
+    marginBottom: 20,
+    borderRadius: 14,
+    overflow: "hidden",
     shadowColor: "#000",
     shadowOpacity: 0.08,
-    shadowRadius: 10,
-    elevation: 5,
+    shadowRadius: 4,
+    elevation: 3,
   },
 
-  header: {
-    marginBottom: 25,
-  },
-
-  title: {
-    fontSize: 26,
-    fontWeight: "700",
-    marginBottom: 5,
-    color: "#000",
-  },
-
-  subtitle: {
-    fontSize: 14,
-    color: "#6F746F",
-  },
-
-  newPostButton: {
-    backgroundColor: "#76C043",
-    paddingVertical: 14,
-    borderRadius: 40,
+  postHeader: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    gap: 10,
-    marginBottom: 35,
+    padding: 10,
   },
 
-  newPostText: {
-    color: "#fff",
-    fontSize: 16,
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+
+  username: {
     fontWeight: "bold",
+    fontSize: 15,
   },
 
-  feedPlaceholder: {
-    marginTop: 10,
+  postImage: {
+    width: "100%",
+    height: 300,
+    backgroundColor: "#ccc",
   },
 
-  feedText: {
-    textAlign: "center",
-    color: "#7A7A7A",
+  description: {
+    padding: 10,
+    fontSize: 14,
+  },
+
+  date: {
+    paddingLeft: 10,
+    paddingBottom: 8,
+    color: "#777",
+    fontSize: 12,
   },
 });
+
