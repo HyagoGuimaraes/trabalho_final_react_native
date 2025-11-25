@@ -36,7 +36,7 @@ export const styles = StyleSheet.create({
   addButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 24,
     textAlign: 'center',
   },
 
@@ -58,4 +58,27 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     marginVertical: 2,
   },
+
+  itemRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 5,
+  },
+
+  removeButton: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: '#ff0000ff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  removeText: {
+    fontSize: 16,
+    color: "#fff",
+    padding: 5,
+  },
+
 });
