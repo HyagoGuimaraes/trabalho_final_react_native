@@ -18,8 +18,9 @@ export const searchFoodApi = async (query: string): Promise<FoodItem[]> => {
                     action: "process",
                     json: 1,
                     page_size: 20,
-            
+                    
                 },
+                // timeout: 5000,
             });
 
         return response.data.products
@@ -38,4 +39,3 @@ export const searchFoodApi = async (query: string): Promise<FoodItem[]> => {
         return [];
     }
 };
-
