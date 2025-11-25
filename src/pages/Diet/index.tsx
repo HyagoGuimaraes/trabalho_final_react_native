@@ -1,95 +1,75 @@
 import { useContext, useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { FoodResultsList } from "../../components/FoodResultsList";
-import { FoodSearchInput } from "../../components/FoodSearchInput";
-import { RefeicaoSelector } from "../../components/RefeicaoSelector";
-import { SelectedFoodsList } from "../../components/SelectedFoodsList";
 import { AuthContext } from "../../context/AuthContext";
-import { searchFoodApi } from "../../service/api";
 import { styles } from "./style";
+import { RefeicaoItem } from "../../components/RefeicaoItem";
+import { AddFoodModal } from "../../components/AddFoodModal";
 
 const REFEICOES: { key: RefeicoesHorario; label: string }[] = [
-    { key: 'cafe', label: 'Café da manhã' },
-    { key: 'almoco', label: 'Almoço' },
-    { key: 'tarde', label: 'Café da tarde' },
-    { key: 'jantar', label: 'Jantar' },
-    { key: 'ceia', label: 'Ceia' },
+  { key: 'cafe', label: 'Café da manhã' },
+  { key: 'almoco', label: 'Almoço' },
+  { key: 'tarde', label: 'Café da tarde' },
+  { key: 'jantar', label: 'Jantar' },
+  { key: 'ceia', label: 'Ceia' },
 ];
 
 export const DietPage = () => {
 
-    const { saveDiet } = useContext(AuthContext);
+  const { saveDiet } = useContext(AuthContext);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedRefeicao, setSelectedRefeicao] = useState<RefeicoesHorario>('cafe');
+  const [refeicaoState, setRefeicaoState] = useState<Record<RefeicoesHorario, RefeicoesItem[]>>({
+    cafe: [],
+    almoco: [],
+    tarde: [],
+    jantar: [],
+    ceia: [],
+  });
 
-    const [query, setQuery] = useState('');
-    const [searchResults, setSearchResults] = useState<FoodItem[]>([]);
-    const [selectedRefeicao, setSelectedRefeicao] = useState<RefeicoesHorario>('cafe');
-    const [refeicaoState, setRefeicaoState] = useState<Record<RefeicoesHorario, RefeicoesItem[]>>({
-        cafe: [],
-        almoco: [],
-        tarde: [],
-        jantar: [],
-        ceia: [],
-    });
-    console.log("Buscando por:", query)
-    const searchFood = async () => {
-        if (!query.trim()) return;
-        try {
-            const foods = await searchFoodApi(query);
-            console.log("Resultados da API (brutos):", foods)
-            setSearchResults(foods);
-        } catch (error) {
-            console.error('Erro ao buscar alimentos:', error);
-        }
+  const handleAddFood = (item: FoodItem) => {
+    const novoItem: RefeicoesItem = {
+      horario: selectedRefeicao,
+      alimento: item,
+      quantidade: 1,
     };
 
-    const addFoodToRefeicao = (item: FoodItem) => {
-        const novoItem: RefeicoesItem = {
-            horario: selectedRefeicao,
-            alimento: item,
-            quantidade: 1,
-        };
+    setRefeicaoState(prev => ({
+      ...prev,
+      [selectedRefeicao]: [...prev[selectedRefeicao], novoItem],
+    }));
 
-        setRefeicaoState(prev => ({
-            ...prev,
-            [selectedRefeicao]: [...prev[selectedRefeicao], novoItem],
-        }));
-    };
-    console.log("State de resultados:", searchResults)
-    return (
-        <SafeAreaView style={styles.safeArea}>
-            <View style={styles.container}>
-                <Text style={styles.title}>Montar Dieta</Text>
+    setModalVisible(false);
+  };
 
-                <FoodSearchInput
-                    query={query}
-                    setQuery={setQuery}
-                    onSearch={searchFood}
-                />
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView style={styles.container}>
+        <Text style={styles.title}>Montar Dieta</Text>
 
-                <RefeicaoSelector
-                    refeicoes={REFEICOES}
-                    selected={selectedRefeicao}
-                    onSelect={setSelectedRefeicao}
-                />
+        {REFEICOES.map((r) => (
+          <RefeicaoItem
+            key={r.key}
+            refeicao={r}
+            items={refeicaoState[r.key]}
+            onAddFood={() => {
+              setSelectedRefeicao(r.key);
+              setModalVisible(true);
+            }}
+          />
+        ))}
 
-                <FoodResultsList
-                    results={searchResults}
-                    onSelectItem={addFoodToRefeicao}
-                />
+        <TouchableOpacity style={styles.button} onPress={() => saveDiet(refeicaoState)}>
+          <Text style={styles.buttonText}>Salvar Dieta</Text>
+        </TouchableOpacity>
+      </ScrollView>
 
-                <SelectedFoodsList
-                    refeicaoState={refeicaoState}
-                    selectedRefeicao={selectedRefeicao}
-                />
-
-                <TouchableOpacity style={styles.button} onPress={() => saveDiet(refeicaoState)}>
-                    <Text style={styles.buttonText}>Salvar Dieta</Text>
-                </TouchableOpacity>
-            </View>
-            <View>
-                
-            </View>
-        </SafeAreaView>
-    );
+      <Modal visible={modalVisible} animationType="slide" transparent>
+        <AddFoodModal
+          onClose={() => setModalVisible(false)}
+          onSelectFood={handleAddFood}
+        />
+      </Modal>
+    </SafeAreaView>
+  );
 };

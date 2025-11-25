@@ -5,14 +5,14 @@ import { AuthProvider } from './src/context/AuthContext';
 export default function App() {
   return (
     <AuthProvider>
-      
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="black"
-          translucent={false}
-        />
-        <Routers />
-      
+
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="black"
+        translucent={false}
+      />
+      <Routers />
+
     </AuthProvider>
   );
 }
