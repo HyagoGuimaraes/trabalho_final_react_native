@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { Alert, TextInput, View } from "react-native";
-import { useAuth } from "../../auth/useAuth";
+import { useAuth } from '../../auth/useAuth';
 import { ButtonForgot } from "../Button/Forgot";
 import { ButtonLogin } from "../Button/Login";
 import { styles } from "./style";
@@ -22,7 +22,6 @@ export const CardLogin = () => {
       Alert.alert("Bem Vindo!")
       setTimeout(() => { navigation.navigate('StackHome') }, 2000)
     }
-
   };
 
   return (

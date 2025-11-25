@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { AuthContext } from "../../context/AuthContext";
+import { DietContext } from "../../context/DietContext";
 import { styles } from "./style";
 import { RefeicaoItem } from "../../components/RefeicaoItem";
 import { AddFoodModal } from "../../components/AddFoodModal";
@@ -16,7 +16,7 @@ const REFEICOES: { key: RefeicoesHorario; label: string }[] = [
 
 export const DietPage = () => {
 
-  const { saveDiet } = useContext(AuthContext);
+  const { saveDiet } = useContext(DietContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedRefeicao, setSelectedRefeicao] = useState<RefeicoesHorario>('cafe');
   const [refeicaoState, setRefeicaoState] = useState<Record<RefeicoesHorario, RefeicoesItem[]>>({
@@ -42,6 +42,13 @@ export const DietPage = () => {
     setModalVisible(false);
   };
 
+  const handleRemoveFood = (horario: RefeicoesHorario, index: number) => {
+    setRefeicaoState(prev => ({
+      ...prev,
+      [horario]: prev[horario].filter((_, i) => i !== index),
+    }));
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container}>
@@ -56,6 +63,7 @@ export const DietPage = () => {
               setSelectedRefeicao(r.key);
               setModalVisible(true);
             }}
+            onRemoveFood={handleRemoveFood}
           />
         ))}
 

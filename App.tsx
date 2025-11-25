@@ -1,10 +1,10 @@
 import { StatusBar } from 'react-native';
 import { Routers } from './src/routers';
-import { AuthProvider } from './src/context/AuthContext';
+import { DietProvider } from './src/context/DietContext';
 
 export default function App() {
   return (
-    <AuthProvider>
+    <DietProvider>
 
       <StatusBar
         barStyle="light-content"
@@ -13,6 +13,6 @@ export default function App() {
       />
       <Routers />
 
-    </AuthProvider>
+    </DietProvider>
   );
 }
