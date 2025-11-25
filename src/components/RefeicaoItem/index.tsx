@@ -36,6 +36,7 @@ export const RefeicaoItem = ({ refeicao, items, onAddFood }: Props) => {
           )}
         </View>
       )}
+      
     </View>
   );
 };

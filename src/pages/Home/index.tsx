@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, Image, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { styles } from "./style";
+import { useEffect, useState } from "react";
+import { Image, ScrollView, Text, View } from "react-native";
 import { getPosts, Post } from "../../service/PostService";
+import { styles } from "./style";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);

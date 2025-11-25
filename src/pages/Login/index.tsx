@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect } from "react";
