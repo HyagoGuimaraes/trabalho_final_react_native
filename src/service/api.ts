@@ -16,7 +16,9 @@ export const searchFoodApi = async (query: string): Promise<FoodItem[]> => {
                     search_terms: query,
                     search_simple: 1,
                     action: "process",
-                    json: 1
+                    json: 1,
+                    page_size: 20,
+            
                 },
             });
 
@@ -26,6 +28,9 @@ export const searchFoodApi = async (query: string): Promise<FoodItem[]> => {
             id: String(item._id ?? index),
             name: item.product_name || "Sem nome",
             calories: item.nutriments["energy-kcal_100g"] ?? 0,
+            proteins: item.nutriments["proteins_100g"] ?? 0, 
+            carbohydrates: item.nutriments["carbohydrates_100g"] ?? 0,
+            imageUrl: item.image_url,
         }));
 
     } catch (error) {

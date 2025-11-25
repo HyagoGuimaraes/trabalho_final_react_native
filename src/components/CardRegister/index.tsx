@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Alert, TextInput, View } from "react-native";

@@ -1,9 +1,8 @@
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useEffect } from "react";
 import { View } from "react-native";
-import { useAuth } from "../../Auth/useAuth";
+import { useAuth } from "../../auth/useAuth";
 import { CardLogin } from "../../components/CardLogin";
 import { FooterLogin } from "../../components/FooterLogin";
 import { styles } from "./style";
