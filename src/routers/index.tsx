@@ -1,8 +1,7 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { AuthProviders } from '../auth/useAuth';
 import { StackRouters } from './stack';
-import { AuthProvider } from '../Auth/useAuth';
 
 const Stack = createStackNavigator();
 
@@ -10,9 +9,9 @@ export const Routers = () => {
 
   return (
     <NavigationContainer>
-      <AuthProvider>
+      <AuthProviders>
         <StackRouters />
-      </AuthProvider>
+      </AuthProviders>
     </NavigationContainer>
   )
 }

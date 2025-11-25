@@ -1,4 +1,4 @@
-import { Api } from "./Api"
+import { Api } from "./api"
 
 export const LoginUser = async () => {
 
@@ -6,6 +6,6 @@ export const LoginUser = async () => {
     const response = Api.get('/users')
     return response
   } catch (error) {
-    
+
   }
 }

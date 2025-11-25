@@ -1,8 +1,8 @@
-import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Home from "../pages/Home";
 import { TabList } from "../@types/navigation";
 import { DietPage } from "../pages/Diet";
+import Home from "../pages/Home";
+import Profile from "../pages/Profile";
 
 const Tab = createBottomTabNavigator<TabList>();
 
@@ -16,8 +16,7 @@ export const TabsRouters = () => {
       <Tab.Screen name="TabHome" component={Home} />
       <Tab.Screen name="TabDieta" component={DietPage} />
       <Tab.Screen name="TabPost" component={Home} />
-      <Tab.Screen name="TabProfile" component={Home} />
+      <Tab.Screen name="TabProfile" component={Profile} />
     </Tab.Navigator>
   );
 };
-
