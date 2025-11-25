@@ -13,9 +13,11 @@ export const AuthProvider = ({ children }: any) => {
     ceia: [],
   });
 
+
   const saveDiet = (newDiet: Record<RefeicoesHorario, RefeicoesItem[]>) => {
     console.log('Dieta salva: ', newDiet);
     setDiet(newDiet);
+
   };
 
   return (
