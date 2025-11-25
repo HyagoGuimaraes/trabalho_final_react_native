@@ -1,11 +1,10 @@
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Alert, TextInput, View } from "react-native";
 import { RegisterUser } from "../../service/RegisterUser";
 import { ButtonLogin } from "../Button/Login";
 import { styles } from "./style";
-
-
 
 export const CardRegister = () => {
   const navigation = useNavigation();

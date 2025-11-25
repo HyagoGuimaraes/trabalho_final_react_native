@@ -4,7 +4,7 @@ import {
   fetchUserProfile,
   fetchTodaySummary,
   updateProfileAPI,
-} from "../service/Api";
+} from "../service/api";
 import {
   loadUser,
   saveUser,

@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, TextInput, View } from "react-native";
 import { useAuth } from "../../auth/useAuth";
@@ -8,20 +9,20 @@ import { styles } from "./style";
 export const CardLogin = () => {
   const navigation = useNavigation();
 
-  const {email,password,setEmail,setPassword, login} = useAuth ();
+  const { email, password, setEmail, setPassword, login } = useAuth();
 
   const checkLogin = async () => {
-    
-    if(!email || !password){
+
+    if (!email || !password) {
       Alert.alert("Por favor, preencha todos os campos.")
       return
     }
-    
+
     const response = await login(email, password);
-    if(response){
+    if (response) {
       Alert.alert("Bem Vindo!")
-      setTimeout(() => {navigation.navigate('StackHome')}, 2000)
-    } 
+      setTimeout(() => { navigation.navigate('StackHome') }, 2000)
+    }
 
   };
 
@@ -48,9 +49,9 @@ export const CardLogin = () => {
       </View>
 
       <View style={styles.button}>
-        <ButtonLogin titulo="Entrar" onPressAction={checkLogin}/>
+        <ButtonLogin titulo="Entrar" onPressAction={checkLogin} />
       </View>
-        
+
       <View style={styles.button}>
         <ButtonForgot />
       </View>

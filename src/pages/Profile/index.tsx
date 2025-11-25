@@ -1,15 +1,6 @@
-import React, { useMemo, useState } from "react";
-import {
-  SafeAreaView,
-  View,
-  Text,
-  TouchableOpacity,
-  Modal,
-  TextInput,
-  FlatList,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import { useMemo, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, TouchableOpacity, Modal, TextInput, FlatList, Alert, ActivityIndicator } from "react-native";
 import { styles } from "./style";
 import { useUser } from "../../hooks/useUser";
 import type { DietaryPreference } from "../../@types/user";
