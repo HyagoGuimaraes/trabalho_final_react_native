@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Alert, TextInput, View } from "react-native";
 import { useAuth } from "../../auth/useAuth";
