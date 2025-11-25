@@ -4,6 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 import { createPost } from "../../service/PostService";
 import { styles } from "./style";
 import { getUserStorage } from "../../service/storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Post() {
   const [image, setImage] = useState<string | null>(null);
@@ -53,26 +54,29 @@ export default function Post() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.safeArea}>
 
-      <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
-        <Text style={styles.imageButtonText}>Escolher imagem</Text>
-      </TouchableOpacity>
+      <View style={styles.container}>
 
-      {image && <Image source={{ uri: image }} style={styles.preview} />}
+        <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
+          <Text style={styles.imageButtonText}>Escolher imagem</Text>
+        </TouchableOpacity>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Escreva uma legenda..."
-        value={description}
-        onChangeText={setDescription}
-        multiline
-      />
+        {image && <Image source={{ uri: image }} style={styles.preview} />}
 
-      <TouchableOpacity style={styles.postButton} onPress={handlePost}>
-        <Text style={styles.postButtonText}>Publicar</Text>
-      </TouchableOpacity>
-    </View>
+        <TextInput
+          style={styles.input}
+          placeholder="Escreva uma legenda..."
+          value={description}
+          onChangeText={setDescription}
+          multiline
+        />
+
+        <TouchableOpacity style={styles.postButton} onPress={handlePost}>
+          <Text style={styles.postButtonText}>Publicar</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
