@@ -6,7 +6,7 @@ import { FoodSearchInput } from "../../components/FoodSearchInput";
 import { RefeicaoSelector } from "../../components/RefeicaoSelector";
 import { SelectedFoodsList } from "../../components/SelectedFoodsList";
 import { AuthContext } from "../../context/AuthContext";
-import { searchFoodApi } from "../../service/Api";
+import { searchFoodApi } from "../../service/api";
 import { styles } from "./style";
 
 const REFEICOES: { key: RefeicoesHorario; label: string }[] = [
@@ -31,11 +31,12 @@ export const DietPage = () => {
         jantar: [],
         ceia: [],
     });
-
+    console.log("Buscando por:", query)
     const searchFood = async () => {
         if (!query.trim()) return;
         try {
             const foods = await searchFoodApi(query);
+            console.log("Resultados da API (brutos):", foods)
             setSearchResults(foods);
         } catch (error) {
             console.error('Erro ao buscar alimentos:', error);
@@ -54,7 +55,7 @@ export const DietPage = () => {
             [selectedRefeicao]: [...prev[selectedRefeicao], novoItem],
         }));
     };
-
+    console.log("State de resultados:", searchResults)
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
@@ -85,6 +86,9 @@ export const DietPage = () => {
                 <TouchableOpacity style={styles.button} onPress={() => saveDiet(refeicaoState)}>
                     <Text style={styles.buttonText}>Salvar Dieta</Text>
                 </TouchableOpacity>
+            </View>
+            <View>
+                
             </View>
         </SafeAreaView>
     );
