@@ -27,7 +27,7 @@ export const saveDailySummary = async (summary: DailySummary | null) => {
 };
 
 export async function getUserStorage() {
-  const user = await AsyncStorage.getItem("user"); // Diego- Chave corrigi para o user. 
+  const user = await AsyncStorage.getItem("user"); // Diego- eu mermo
   return user ? JSON.parse(user) : null;
 }
 
