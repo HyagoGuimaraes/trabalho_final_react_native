@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
   imagemContainer: {
     flex: 1,
     alignItems: "center",
-    // width:
+    marginBottom: 10,
+
   },
 
   postContainer: {
@@ -47,15 +48,16 @@ export const styles = StyleSheet.create({
   postImage: {
     width: 350,
     height: 250,
-    backgroundColor: "#ccc",
+    borderRadius: 20    
   },
 
   description: {
-    padding: 10,
-    fontSize: 50,
+    padding: 20,
+    fontSize: 30,
     color: "#000",
     height: 100,
-    width: "100%",
+    textAlign: 'center',
+    
   },
 
   date: {
@@ -64,7 +66,4 @@ export const styles = StyleSheet.create({
     color: "#777",
     fontSize: 12,
   },
-
-  descriptionContainer: {
-  }
 });
