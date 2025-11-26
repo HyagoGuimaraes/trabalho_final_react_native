@@ -4,9 +4,14 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-    alignItems: "center",
     width: "100%",
-    
+    backgroundColor: '#F4FFE9'    
+  },
+
+  imagemContainer: {
+    flex: 1,
+    alignItems: "center",
+    // width:
   },
 
   postContainer: {
@@ -40,7 +45,7 @@ export const styles = StyleSheet.create({
   },
 
   postImage: {
-    width: 250,
+    width: 350,
     height: 250,
     backgroundColor: "#ccc",
   },
