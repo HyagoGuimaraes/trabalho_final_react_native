@@ -3,12 +3,12 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f5fdf5',
+    backgroundColor: '#F4FFE9',
   },
 
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F4FFE9',
     padding: 16,
   },
 
