@@ -2,16 +2,16 @@ import { Api } from "./api";
 
 export interface Post {
   id?: string;
-  userId: string;
+  userId?: string;
   username: string;
   description: string;
   image: string; 
-  createdAt: string;
+  createdAt?: string;
 }
 
-export const getPosts = async (): Promise<Post[]> => {
+export const getPosts = async (post: {userId: string}): Promise<Post[] | null> => {
   try {
-    const response = await Api.get("/posts");
+    const response = await Api.get(`/users/${post.userId}/post`);
     return response.data;
   } catch (error) {
     console.log("Erro ao buscar posts:", error);
@@ -20,8 +20,11 @@ export const getPosts = async (): Promise<Post[]> => {
 };
 
 export const createPost = async (post: Post): Promise<Post | null> => {
+  console.log(post.description)
+  // console.log(post.id)
+  console.log(post.userId)
   try {
-    const response = await Api.post("/posts", post);
+    const response = await Api.post(`/users/${post.userId}/post`, post);
     return response.data;
   } catch (error) {
     console.log("Erro ao criar post:", error);
