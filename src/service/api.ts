@@ -1,65 +1,47 @@
 import axios from "axios";
 
 export const baseUrl = "https://68dda582d7b591b4b78d02ee.mockapi.io/Native";
+
 export const Api = axios.create({
   baseURL: baseUrl,
 });
 
-const API_KEY = "83b3fabbac834e97b27d2fe7521b360f";
-const BASE_URL = "https://api.spoonacular.com/recipes/complexSearch";
-
-type SpoonacularRecipe = {
-  id: number;
-  title: string;
-  image: string;
-  nutrition?: {
-    nutrients: Array<{
-      name: string;
-      amount: number;
-      unit: string;
-    }>;
-  };
-};
+const OPEN_FOOD_FACTS_URL = "https://world.openfoodfacts.org/api/v0/product/";
 
 export const searchFoodApi = async (query: string): Promise<FoodItem[]> => {
   try {
-    const response = await axios.get<{ results: SpoonacularRecipe[] }>(
-      BASE_URL,
+    const response = await axios.get<{ products: OpenFoodFactsResponse[] }>(
+      "https://world.openfoodfacts.org/cgi/search.pl",
       {
         params: {
-          apiKey: API_KEY,
-          query: query,
-          number: 10,
-          includeIngredients: query,
-          addRecipeInformation: true,
-          addRecipeNutrition: true,
+          search_terms: query,
+          search_simple: 1,
+          action: 'process',
+          json: 1,
+          page_size: 15,
+          lc: 'pt', 
+          sort_by: 'unique_scans', 
+          tagtype_0: 'countries',
+          tag_contains_0: 'contains',
+          tag_0: 'brasil',
         },
       }
     );
 
-    console.log(response.data.results);
-
-    return response.data.results
-      .filter((item) => item.nutrition?.nutrients)
-      .map((item) => {
-        const getNutrient = (name: string) => {
-          const nutrient = item.nutrition?.nutrients.find(
-            (n) => n.name === name
-          );
-          return nutrient?.amount ?? 0;
-        };
-
-        return {
-          id: String(item.id),
-          name: item.title,
-          calories: getNutrient("Calories"),
-          proteins: getNutrient("Protein"),
-          carbohydrates: getNutrient("Carbohydrates"),
-          imageUrl: item.image,
-        };
-      });
+    return response.data.products
+      .filter(
+        (item) => item?.product_name && item?.nutriments?.["energy-kcal_100g"]
+      )
+      .map((item, index) => ({
+        id: String(item._id ?? index),
+        name: item.product_name || "Sem nome",
+        calories: item.nutriments["energy-kcal_100g"] ?? 0,
+        proteins: item.nutriments["proteins_100g"] ?? 0,
+        carbohydrates: item.nutriments["carbohydrates_100g"] ?? 0,
+        imageUrl: item.image_url,
+      }));
   } catch (error) {
-    console.error("Erro ao buscar no Spoonacular:", error);
+    console.error("Erro ao buscar no OpenFoodFacts:", error);
     return [];
   }
 };

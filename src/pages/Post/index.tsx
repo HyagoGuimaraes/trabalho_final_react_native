@@ -1,25 +1,48 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, TextInput, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  Alert,
+} from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { createPost } from "../../service/PostService";
 import { styles } from "./style";
 import { getUserStorage } from "../../service/storage";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAuth } from "../../auth/useAuth";
+import * as ImageManipulator from "expo-image-manipulator";
 
 export default function Post() {
   const [image, setImage] = useState<string | null>(null);
   const [description, setDescription] = useState("");
+  const { user } = useAuth();
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
       base64: true,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 0.7,
+      quality: 1,
     });
-
     if (!result.canceled) {
-      const base64 = `data:image/jpeg;base64,${result.assets[0].base64}`;
-      setImage(base64);
+      const asset = result.assets[0];
+
+      const manipulatedImage = await ImageManipulator.manipulateAsync(
+        asset.uri,
+        [{ resize: { width: 600 } }],
+        {
+          compress: 0.6,
+          format: ImageManipulator.SaveFormat.JPEG,
+          base64: true,
+        }
+      );
+
+      if (manipulatedImage.base64) {
+        const base64 = `data:image/jpeg;base64,${manipulatedImage.base64}`;
+        setImage(base64);
+      }
     }
   };
 
@@ -29,19 +52,16 @@ export default function Post() {
       return;
     }
 
-    const user = await getUserStorage();
-
     if (!user) {
       Alert.alert("Erro: usuário não encontrado");
       return;
     }
-
+    console.log("tipo da imagem", typeof image);
     const newPost = {
       userId: user.id,
       username: user.name,
-      description,
       image,
-      createdAt: new Date().toISOString(),
+      description,
     };
 
     const saved = await createPost(newPost);
@@ -50,14 +70,13 @@ export default function Post() {
       Alert.alert("Post criado com sucesso!");
       setImage(null);
       setDescription("");
+      
     }
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-
       <View style={styles.container}>
-
         <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
           <Text style={styles.imageButtonText}>Escolher imagem</Text>
         </TouchableOpacity>
@@ -79,4 +98,3 @@ export default function Post() {
     </SafeAreaView>
   );
 }
-

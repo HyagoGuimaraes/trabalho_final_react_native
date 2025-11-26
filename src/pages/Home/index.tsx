@@ -3,17 +3,23 @@ import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 import { getPosts, Post } from "../../service/PostService";
 import { styles } from "./style";
+import { useAuth } from "../../auth/useAuth";
 
 export default function Home() {
+  const { user } = useAuth();
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    loadPosts();
-  }, []);
+    if (user?.id) {
+      loadPosts(user.id);
+    }
+  }, [user?.id]);
 
-  const loadPosts = async () => {
-    const data = await getPosts();
-    setPosts(data.reverse()); // últimos primeiro
+  const loadPosts = async (userId: string) => {
+    const data = await getPosts({userId});
+    if(data){
+      setPosts(data.reverse()); 
+    }
   };
 
   return (
@@ -21,23 +27,18 @@ export default function Home() {
       <ScrollView showsVerticalScrollIndicator={false}>
         {posts.map((post) => (
           <View key={post.id} style={styles.postContainer}>
-
             {/* HEADER */}
             <View style={styles.postHeader}>
               <Image source={{ uri: post.image }} style={styles.avatar} />
               <Text style={styles.username}>{post.username}</Text>
             </View>
 
-            {/* IMAGEM */}
             <Image source={{ uri: post.image }} style={styles.postImage} />
 
-            {/* LEGENDA */}
-            <Text style={styles.description}>{post.description}</Text>
+            <View style={styles.descriptionContainer}>
+              <Text style={styles.description}>{post.description}</Text>
+            </View>
 
-            {/* DATA */}
-            <Text style={styles.date}>
-              {new Date(post.createdAt).toLocaleString("pt-BR")}
-            </Text>
           </View>
         ))}
       </ScrollView>
