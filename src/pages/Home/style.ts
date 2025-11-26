@@ -4,17 +4,21 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
+    alignItems: "center",
+    width: "100%",
+    
   },
 
   postContainer: {
     backgroundColor: "#fff",
-    marginBottom: 20,
+    marginTop: 50,
     borderRadius: 14,
     overflow: "hidden",
     shadowColor: "#000",
     shadowOpacity: 0.08,
     shadowRadius: 4,
     elevation: 3,
+    width: "100%"
   },
 
   postHeader: {
@@ -36,14 +40,17 @@ export const styles = StyleSheet.create({
   },
 
   postImage: {
-    width: "100%",
-    height: 300,
+    width: 250,
+    height: 250,
     backgroundColor: "#ccc",
   },
 
   description: {
     padding: 10,
-    fontSize: 14,
+    fontSize: 50,
+    color: "#000",
+    height: 100,
+    width: "100%",
   },
 
   date: {
@@ -52,5 +59,7 @@ export const styles = StyleSheet.create({
     color: "#777",
     fontSize: 12,
   },
-});
 
+  descriptionContainer: {
+  }
+});

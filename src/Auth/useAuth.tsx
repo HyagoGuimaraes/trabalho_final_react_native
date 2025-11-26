@@ -13,11 +13,18 @@ interface PropsAuth {
   user: PropsUser | null; 
 }
 
+interface PropsPost {
+  id: string,
+  image: string,
+  description: string
+}
+
 interface PropsUser {
   name: string,
   email: string,
   password: string,
-  id: string
+  id: string,
+  post: PropsPost[]
 }
 
 const AuthContext = createContext<PropsAuth>({
@@ -27,7 +34,7 @@ const AuthContext = createContext<PropsAuth>({
   setPassword: () => {},
   login: async () => false,
   getData: async () => false,
-  user: null,
+  user: {name: "", email: "", password: "", id: "", post: []},
 })
 
 interface AuthProps {

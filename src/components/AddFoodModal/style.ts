@@ -20,11 +20,35 @@ export const styles = StyleSheet.create({
     shadowRadius: 4,
   },
 
+  closeButton: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: "#ff0000ff",
+    width: 30,
+    height: 30,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  closeButtonText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#ffffffff"
+  },
+
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 15,
+  },
+
+  resultsContainer: {
+    maxHeight: 250,
+    marginTop: 10,
+    overflow: "hidden",
   },
 
   modalClose: {
