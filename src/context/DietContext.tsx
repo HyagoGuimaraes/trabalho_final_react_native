@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { Api } from "../service/api";
-import { useAuth } from "../auth/useAuth";
+import { useAuth } from "../Auth/useAuth";
 
 interface DietContextProps {
   diet: Record<RefeicoesHorario, RefeicoesItem[]>;

@@ -5,21 +5,24 @@ import { DietContext } from "../../context/DietContext";
 import { styles } from "./style";
 import { RefeicaoItem } from "../../components/RefeicaoItem";
 import { AddFoodModal } from "../../components/AddFoodModal";
+import DismissKeyboard from "../../components/Keyboard/DismissKeyboard";
 
 const REFEICOES: { key: RefeicoesHorario; label: string }[] = [
-  { key: 'cafe', label: 'Café da manhã' },
-  { key: 'almoco', label: 'Almoço' },
-  { key: 'tarde', label: 'Café da tarde' },
-  { key: 'jantar', label: 'Jantar' },
-  { key: 'ceia', label: 'Ceia' },
+  { key: "cafe", label: "Café da manhã" },
+  { key: "almoco", label: "Almoço" },
+  { key: "tarde", label: "Café da tarde" },
+  { key: "jantar", label: "Jantar" },
+  { key: "ceia", label: "Ceia" },
 ];
 
 export const DietPage = () => {
-
   const { saveDiet } = useContext(DietContext);
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedRefeicao, setSelectedRefeicao] = useState<RefeicoesHorario>('cafe');
-  const [refeicaoState, setRefeicaoState] = useState<Record<RefeicoesHorario, RefeicoesItem[]>>({
+  const [selectedRefeicao, setSelectedRefeicao] = useState<RefeicoesHorario>("cafe");
+
+  const [refeicaoState, setRefeicaoState] = useState<
+    Record<RefeicoesHorario, RefeicoesItem[]>
+  >({
     cafe: [],
     almoco: [],
     tarde: [],
@@ -34,7 +37,7 @@ export const DietPage = () => {
       quantidade: 1,
     };
 
-    setRefeicaoState(prev => ({
+    setRefeicaoState((prev) => ({
       ...prev,
       [selectedRefeicao]: [...prev[selectedRefeicao], novoItem],
     }));
@@ -43,41 +46,43 @@ export const DietPage = () => {
   };
 
   const handleRemoveFood = (horario: RefeicoesHorario, index: number) => {
-    setRefeicaoState(prev => ({
+    setRefeicaoState((prev) => ({
       ...prev,
       [horario]: prev[horario].filter((_, i) => i !== index),
     }));
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.container}>
-        <Text style={styles.title}>Montar Dieta</Text>
+    <DismissKeyboard>
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView style={styles.container}>
+          <Text style={styles.title}>Montar Dieta</Text>
 
-        {REFEICOES.map((r) => (
-          <RefeicaoItem
-            key={r.key}
-            refeicao={r}
-            items={refeicaoState[r.key]}
-            onAddFood={() => {
-              setSelectedRefeicao(r.key);
-              setModalVisible(true);
-            }}
-            onRemoveFood={handleRemoveFood}
+          {REFEICOES.map((r) => (
+            <RefeicaoItem
+              key={r.key}
+              refeicao={r}
+              items={refeicaoState[r.key]}
+              onAddFood={() => {
+                setSelectedRefeicao(r.key);
+                setModalVisible(true);
+              }}
+              onRemoveFood={handleRemoveFood}
+            />
+          ))}
+
+          <TouchableOpacity style={styles.button} onPress={() => saveDiet(refeicaoState)}>
+            <Text style={styles.buttonText}>Salvar Dieta</Text>
+          </TouchableOpacity>
+        </ScrollView>
+
+        <Modal visible={modalVisible} animationType="slide" transparent>
+          <AddFoodModal
+            onClose={() => setModalVisible(false)}
+            onSelectFood={handleAddFood}
           />
-        ))}
-
-        <TouchableOpacity style={styles.button} onPress={() => saveDiet(refeicaoState)}>
-          <Text style={styles.buttonText}>Salvar Dieta</Text>
-        </TouchableOpacity>
-      </ScrollView>
-
-      <Modal visible={modalVisible} animationType="slide" transparent>
-        <AddFoodModal
-          onClose={() => setModalVisible(false)}
-          onSelectFood={handleAddFood}
-        />
-      </Modal>
-    </SafeAreaView>
+        </Modal>
+      </SafeAreaView>
+    </DismissKeyboard>
   );
 };

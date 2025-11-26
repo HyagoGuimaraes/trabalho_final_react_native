@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 import { getPosts, Post } from "../../service/PostService";
 import { styles } from "./style";
-import { useAuth } from "../../auth/useAuth";
+import { useAuth } from "../../Auth/useAuth";
 
 export default function Home() {
   const { user } = useAuth();
