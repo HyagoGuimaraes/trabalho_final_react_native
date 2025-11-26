@@ -24,7 +24,7 @@ interface PropsUser {
   email: string,
   password: string,
   id: string,
-  post: PropsPost[]
+  post: PropsPost[],
 }
 
 const AuthContext = createContext<PropsAuth>({
