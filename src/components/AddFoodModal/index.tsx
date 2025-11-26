@@ -26,10 +26,22 @@ export const AddFoodModal = ({ onClose, onSelectFood }: Props) => {
   return (
     <View style={styles.modalBackground}>
       <View style={styles.modalContent}>
+
+        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Text style={styles.closeButtonText}>X</Text>
+        </TouchableOpacity>
+
         <Text style={styles.modalTitle}>Adicionar alimento</Text>
 
         <FoodSearchInput query={query} setQuery={setQuery} onSearch={searchFood} />
-        {loading ? <Text>Buscando...</Text> : <FoodResultsList results={results} onSelectItem={onSelectFood} />}
+
+        <View style={styles.resultsContainer}>
+          {loading ? (
+            <Text>Buscando...</Text>
+          ) : (
+            <FoodResultsList results={results} onSelectItem={onSelectFood} />
+          )}
+        </View>
 
         <TouchableOpacity style={styles.modalClose} onPress={onClose}>
           <Text>Cancelar</Text>
