@@ -23,17 +23,17 @@ export default function Home() {
   };
 
   return (
-    <LinearGradient colors={["#E6F7D9", "#A1D97B"]} style={styles.container}>
+    <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {posts.map((post) => (
           <View key={post.id} style={styles.postContainer}>
-            {/* HEADER */}
             <View style={styles.postHeader}>
               <Image source={{ uri: post.image }} style={styles.avatar} />
               <Text style={styles.username}>{post.username}</Text>
             </View>
-
-            <Image source={{ uri: post.image }} style={styles.postImage} />
+            <View style={styles.imagemContainer}>
+              <Image source={{ uri: post.image }} style={styles.postImage} />
+            </View>
 
             <View style={styles.descriptionContainer}>
               <Text style={styles.description}>{post.description}</Text>
@@ -42,6 +42,6 @@ export default function Home() {
           </View>
         ))}
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 }
