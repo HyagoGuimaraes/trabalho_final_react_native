@@ -1,11 +1,12 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { FlatList, Image, TouchableOpacity, Text, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { getPosts, Post } from "../../service/PostService";
 import { styles } from "./style";
 import { useAuth } from "../../auth/useAuth";
 import { CommentModal } from "../../components/CommentModal";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -13,9 +14,13 @@ export default function Home() {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    loadPosts();
-  }, []);
+    if (isFocused) {
+      loadPosts();
+    }
+  }, [isFocused]);
 
   const loadPosts = async () => {
     const data = await getPosts();
@@ -24,6 +29,7 @@ export default function Home() {
     }
   };
 
+  
   const handleLike = (postId: string) => {
     setPosts((prev) =>
       prev.map((item) => {
@@ -40,11 +46,13 @@ export default function Home() {
     );
   };
 
+
   const handleComment = (postId: string) => {
     setSelectedPostId(postId);
     setIsCommentModalOpen(true);
   };
 
+  
   const handleSubmitComment = (comment: string) => {
     if (!selectedPostId) return;
 
@@ -53,7 +61,10 @@ export default function Home() {
         if (item.id === selectedPostId) {
           return {
             ...item,
-            comments: [...(item.comments || []), { user: user?.name || "Você", text: comment }],
+            comments: [...(item.comments || []), {
+              user: user?.name || "Você",
+              text: comment
+            }],
           };
         }
         return item;
@@ -65,25 +76,26 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        colors={["#fff", "#e8e8e8"]}
-        style={styles.header}
-      >
+      <LinearGradient colors={["#fff", "#e8e8e8"]} style={styles.header}>
         <Text style={styles.headerTitle}>MyDietGram</Text>
       </LinearGradient>
 
       <FlatList
         data={posts}
         keyExtractor={(item) => String(item.id)}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <View style={styles.postContainer}>
+         
             <View style={styles.postHeader}>
               <Image source={{ uri: item.userAvatar }} style={styles.avatar} />
               <Text style={styles.username}>{item.username}</Text>
             </View>
 
+            
             <Image source={{ uri: item.image }} style={styles.postImage} />
 
+           
             <View style={styles.postActions}>
               <TouchableOpacity onPress={() => handleLike(item.id!)}>
                 <Feather
@@ -103,27 +115,31 @@ export default function Home() {
               </TouchableOpacity>
             </View>
 
-            {item.likes !== undefined && item.likes > 0 && (
+     
+            {typeof item.likes === "number" && item.likes > 0 && (
               <Text style={styles.likesText}>{item.likes} curtidas</Text>
             )}
 
+          
             {item.createdAt && (
               <Text style={styles.postDate}>
                 {new Date(item.createdAt).toLocaleDateString("pt-BR")}
               </Text>
             )}
 
+    
             <Text style={styles.description}>
-              <Text style={styles.usernameDesc}>{item.username} </Text>
-              {item.description}
+              <Text style={styles.usernameDesc}>{item.username || ""} </Text>
+              {item.description || ""}
             </Text>
 
-            {item.comments && item.comments.length > 0 && (
+           
+            {Array.isArray(item.comments) && item.comments.length > 0 && (
               <View style={{ marginTop: 8 }}>
                 {item.comments.map((c, index) => (
                   <Text key={index} style={styles.commentText}>
-                    <Text style={styles.usernameDesc}>{c.user} </Text>
-                    {c.text}
+                    <Text style={styles.usernameDesc}>{c.user || ""} </Text>
+                    {c.text || ""}
                   </Text>
                 ))}
               </View>
