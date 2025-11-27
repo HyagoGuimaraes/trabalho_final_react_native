@@ -7,11 +7,12 @@ export interface Post {
   description: string;
   image: string; 
   createdAt?: string;
+  shared: boolean;
 }
 
 export const getPosts = async (post: {userId: string}): Promise<Post[] | null> => {
   try {
-    const response = await Api.get(`/users/${post.userId}/post`);
+    const response = await Api.get(`/users`);
     return response.data;
   } catch (error) {
     console.log("Erro ao buscar posts:", error);

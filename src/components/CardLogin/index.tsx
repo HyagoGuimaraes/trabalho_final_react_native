@@ -20,7 +20,7 @@ export const CardLogin = () => {
     const response = await login(email, password);
     if (response) {
       Alert.alert("Bem Vindo!")
-      setTimeout(() => { navigation.navigate('StackHome') }, 2000)
+      setTimeout(() => { navigation.reset({index:0, routes:[{name: 'StackHome'}]}) }, 2000)
     }
   };
 

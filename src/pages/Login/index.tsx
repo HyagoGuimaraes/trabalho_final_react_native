@@ -10,15 +10,8 @@ import { styles } from "./style";
 export const Login = () => {
   
   const {getData, user} = useAuth();
-  const navigation = useNavigation();
-
+  
   useEffect(() => {getData()}, [])
-
-  useEffect(() => {
-    if(user) {
-      navigation.navigate("StackHome")
-    }
-  }, [user, navigation])
 
   return (
     <View style={styles.container}>
