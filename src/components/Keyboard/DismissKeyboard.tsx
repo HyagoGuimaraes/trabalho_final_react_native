@@ -1,10 +1,11 @@
 import React from "react";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import { styles } from "./style";
 
 export default function DismissKeyboard({ children }: any) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      {children}
+      <View style={styles.keyboard}>{children}</View>
     </TouchableWithoutFeedback>
   );
 }

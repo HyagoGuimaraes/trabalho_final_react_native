@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Modal, ScrollView, Text, TouchableOpacity } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Modal, FlatList, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { DietContext } from "../../context/DietContext";
 import { styles } from "./style";
@@ -28,10 +28,9 @@ export const DietPage = () => {
     ceia: [],
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (diet?.refeicoes) {
       setRefeicaoState(diet.refeicoes);
-      console.log("Dieta carregada na tela:", diet.refeicoes);
     }
   }, [diet]);
 
@@ -70,44 +69,49 @@ export const DietPage = () => {
     }));
   };
 
+  const renderRefeicao = ({ item }: { item: typeof REFEICOES[number] }) => (
+    <RefeicaoItem
+      refeicao={item}
+      items={refeicaoState[item.key]}
+      onAddFood={() => {
+        setSelectedRefeicao(item.key);
+        setModalVisible(true);
+      }}
+      onRemoveFood={handleRemoveFood}
+      onUpdateFood={handleUpdateFood}
+    />
+  );
+
   return (
     <DismissKeyboard>
       <SafeAreaView style={styles.safeArea}>
-        <ScrollView style={styles.container}>
-          <Text style={styles.title}>Montar Dieta</Text>
+        <Text style={styles.title}>Montar Dieta</Text>
 
-          {REFEICOES.map(r => (
-            <RefeicaoItem
-              key={r.key}
-              refeicao={r}
-              items={refeicaoState[r.key]}
-              onAddFood={() => {
-                setSelectedRefeicao(r.key);
-                setModalVisible(true);
-              }}
-              onRemoveFood={handleRemoveFood}
-              onUpdateFood={handleUpdateFood}
-            />
-          ))}
+        <FlatList
+          data={REFEICOES}
+          keyExtractor={(item) => item.key}
+          renderItem={renderRefeicao}
+          contentContainerStyle={{ paddingBottom: 20 }}
+          keyboardShouldPersistTaps='always'
+        />
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              const totais = Object.values(refeicaoState).flat().reduce(
-                (acc, item) => ({
-                  calories: acc.calories + item.alimento.calories * (item.quantidade || 1),
-                  proteins: acc.proteins + item.alimento.proteins * (item.quantidade || 1),
-                  carbohydrates: acc.carbohydrates + item.alimento.carbohydrates * (item.quantidade || 1),
-                }),
-                { calories: 0, proteins: 0, carbohydrates: 0 }
-              );
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            const totais = Object.values(refeicaoState).flat().reduce(
+              (acc, item) => ({
+                calories: acc.calories + item.alimento.calories,
+                proteins: acc.proteins + item.alimento.proteins,
+                carbohydrates: acc.carbohydrates + item.alimento.carbohydrates,
+              }),
+              { calories: 0, proteins: 0, carbohydrates: 0 }
+            );
 
-              saveDiet(refeicaoState, totais);
-            }}
-          >
-            <Text style={styles.buttonText}>Salvar Dieta</Text>
-          </TouchableOpacity>
-        </ScrollView>
+            saveDiet(refeicaoState, totais);
+          }}
+        >
+          <Text style={styles.buttonText}>Salvar Dieta</Text>
+        </TouchableOpacity>
 
         <Modal visible={modalVisible} transparent animationType="slide">
           <AddFoodModal
