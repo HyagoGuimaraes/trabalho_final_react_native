@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "#F4FFE9",
   },
 
-  /* Header */
   header: {
     width: "100%",
     paddingTop: 45,
@@ -16,70 +15,89 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderBottomWidth: 0.3,
-    borderColor: "#cfcfcf",
-    marginBottom: 15,
+    borderColor: "#e3e3e3",
     backgroundColor: "#fff",
   },
 
   headerTitle: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "700",
   },
 
-  headerIcons: {
-    flexDirection: "row",
-    gap: 15,
-  },
-
-  /* Post */
   postContainer: {
     backgroundColor: "#fff",
-    marginBottom: 30,
-    borderRadius: 14,
+    marginBottom: 20,
+    borderRadius: 12,
     overflow: "hidden",
-    shadowColor: "#000",
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 4,
     width: "100%",
+    borderWidth: 0.5,
+    borderColor: "#e6e6e6",
   },
 
   postHeader: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
   },
 
   avatar: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    marginRight: 10,
+    width: 45,
+    height: 45,
+    borderRadius: 22.5,
   },
 
   username: {
-    fontWeight: "bold",
-    fontSize: 16,
-    color: "#333",
-  },
-
-  imagemContainer: {
-    width: "100%",
-    alignItems: "center",
-    backgroundColor: "#eee",
+    fontWeight: "600",
+    fontSize: 15,
+    color: "#000",
+    marginLeft: 10,
   },
 
   postImage: {
-    width: "95%",
-    height: 260,
-    marginVertical: 10,
-    borderRadius: 14,
+    width: "100%",
+    height: 300,
+    backgroundColor: "#eee",
+  },
+
+  postActions: {
+    flexDirection: "row",
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+
+  postActionsIcon: {
+    marginLeft: 20,
+  },
+
+  likesText: {
+    fontWeight: "bold",
+    fontSize: 14,
+    marginLeft: 15,
+    marginTop: 5,
+  },
+
+  postDate: {
+    fontSize: 12,
+    color: "#777",
+    marginLeft: 15,
   },
 
   description: {
-    paddingHorizontal: 15,
-    paddingVertical: 12,
     fontSize: 15,
-    color: "#000",
+    paddingHorizontal: 15,
+    paddingBottom: 10,
+  },
+
+  usernameDesc: {
+    fontWeight: "bold",
+    fontSize: 15,
+  },
+
+  commentText: {
+    fontSize: 14,
+    paddingHorizontal: 15,
+    paddingVertical: 2,
+    color: "#333",
   },
 });

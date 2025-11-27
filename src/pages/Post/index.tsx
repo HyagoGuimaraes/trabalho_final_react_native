@@ -22,18 +22,20 @@ export default function Post() {
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images, 
       base64: true,
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
     });
+
     if (!result.canceled) {
       const asset = result.assets[0];
 
+     
       const manipulatedImage = await ImageManipulator.manipulateAsync(
         asset.uri,
-        [{ resize: { width: 600 } }],
+        [{ resize: { width: 300 } }],
         {
-          compress: 0.6,
+          compress: 0.3, 
           format: ImageManipulator.SaveFormat.JPEG,
           base64: true,
         }
@@ -60,9 +62,10 @@ export default function Post() {
     const newPost = {
       userId: user.id,
       username: user.name,
+      userAvatar: user.avatar || "https://i.imgur.com/placeholder.png",
       image,
       description,
-      shared: true
+      shared: true,
     };
 
     const saved = await createPost(newPost);

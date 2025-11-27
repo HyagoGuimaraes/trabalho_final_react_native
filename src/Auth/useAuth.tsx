@@ -22,11 +22,12 @@ interface PropsPost {
 }
 
 interface PropsUser {
-  name: string,
-  email: string,
-  password: string,
-  id: string,
-  post: PropsPost[],
+  name: string;
+  email: string;
+  password: string;
+  id: string;
+  avatar?: string;
+  post: PropsPost[];
   weight: string,
   height: string
 }
