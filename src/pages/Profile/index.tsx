@@ -6,6 +6,7 @@ import { Api } from "../../service/api";
 import { styles } from "./style";
 import { DadosUser } from "../../components/dadosUser";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Profile() {
   const { user, setUser, logOut } = useAuth();
@@ -29,7 +30,7 @@ export default function Profile() {
 
         const manipulated = await ImageManipulator.manipulateAsync(
           uri,
-          [{ resize: { width: 600 } }],
+          [{ resize: { width: 400 } }],
           {
             compress: 0.5,
             format: ImageManipulator.SaveFormat.JPEG,
@@ -39,12 +40,14 @@ export default function Profile() {
 
         const base64Img = "data:image/jpeg;base64," + manipulated.base64;
 
-        await Api.put(`/users/${user.id}`, {
-          ...user,
+        await Api.patch(`/users/${user.id}`, {
           image: base64Img,
         });
 
-        setUser({ ...user, image: base64Img });
+        const updatedUser = { ...user, image: base64Img };
+        setUser(updatedUser);
+
+        await AsyncStorage.setItem("@user", JSON.stringify(updatedUser));
 
         Alert.alert("Foto atualizada!");
       } catch (error) {

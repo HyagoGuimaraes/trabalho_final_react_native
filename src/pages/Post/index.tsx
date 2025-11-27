@@ -62,7 +62,7 @@ export default function Post() {
     const newPost = {
       userId: user.id,
       username: user.name,
-      userAvatar: user.image || "https://i.imgur.com/placeholder.png",
+      userAvatar: user.image,
       image,
       description,
       shared: true,
