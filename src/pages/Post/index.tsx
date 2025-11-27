@@ -12,7 +12,7 @@ import { createPost } from "../../service/PostService";
 import { styles } from "./style";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../auth/useAuth";
-import { ImageManipulator } from "expo-image-manipulator";
+import * as ImageManipulator from "expo-image-manipulator";
 import DismissKeyboard from "../../components/Keyboard/DismissKeyboard";
 
 export default function Post() {

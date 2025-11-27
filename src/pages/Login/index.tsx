@@ -10,11 +10,10 @@ import DismissKeyboard from "../../components/Keyboard/DismissKeyboard";
 
 export const Login = () => {
   
-  const {getData, user} = useAuth();
+  const {getData} = useAuth();
 
   useEffect(() => {getData()}, [])
 
- 
 
   return (
     <DismissKeyboard>
