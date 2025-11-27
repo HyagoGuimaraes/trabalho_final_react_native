@@ -33,9 +33,9 @@ interface PropsUser {
 
 const AuthContext = createContext<PropsAuth>({
   email: '',
-  setEmail: () => {},
+  setEmail: () => { },
   password: '',
-  setPassword: () => {},
+  setPassword: () => { },
   login: async () => false,
   getData: async () => false,
   user: {name: "", email: "", password: "", id: "", post: [], weight: "", height: ""},
@@ -50,7 +50,7 @@ export const AuthProviders = ({children}: AuthProps) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [user, setUser] = useState<PropsUser | null>(null)
-  
+
   const saveData = async (user: PropsUser) => {
     try {
       const jsonValue = JSON.stringify(user)
@@ -63,37 +63,37 @@ export const AuthProviders = ({children}: AuthProps) => {
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('@user')
-      if(value){
+      if (value) {
         const userStorage: PropsUser = JSON.parse(value)
         setUser(userStorage)
         navigation.navigate("StackHome")
         return true
-      } 
+      }
       else {
         setUser(null)
         return false
-      } 
+      }
     } catch (error) {
       return false
     }
   }
-  
+
   const login = async (email: string, password: string) => {
-      
+
     const response = await LoginUser();
     const users = response?.data
     const foundUser = users.find((user: PropsUser) => user.email === email && user.password === password)
-    
-    if(foundUser){
+
+    if (foundUser) {
       setUser(foundUser)
       saveData(foundUser)
       return true
-    } 
+    }
 
     else {
       Alert.alert("Nenhum Usuario Encontrado")
       return false
-    } 
+    }
   }
 
   const logOut = async () => {
@@ -113,4 +113,3 @@ export const AuthProviders = ({children}: AuthProps) => {
 }
 
 export const useAuth = () => useContext(AuthContext)
-

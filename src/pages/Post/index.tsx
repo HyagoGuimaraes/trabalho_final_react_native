@@ -10,10 +10,10 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { createPost } from "../../service/PostService";
 import { styles } from "./style";
-import { getUserStorage } from "../../service/storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../../auth/useAuth";
-import * as ImageManipulator from "expo-image-manipulator";
+import { ImageManipulator } from "expo-image-manipulator";
+import DismissKeyboard from "../../components/Keyboard/DismissKeyboard";
 
 export default function Post() {
   const [image, setImage] = useState<string | null>(null);
@@ -56,7 +56,7 @@ export default function Post() {
       Alert.alert("Erro: usuário não encontrado");
       return;
     }
-    console.log("tipo da imagem", typeof image);
+
     const newPost = {
       userId: user.id,
       username: user.name,
@@ -70,31 +70,32 @@ export default function Post() {
       Alert.alert("Post criado com sucesso!");
       setImage(null);
       setDescription("");
-      
     }
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
-          <Text style={styles.imageButtonText}>Escolher imagem</Text>
-        </TouchableOpacity>
+    <DismissKeyboard>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
+            <Text style={styles.imageButtonText}>Escolher imagem</Text>
+          </TouchableOpacity>
 
-        {image && <Image source={{ uri: image }} style={styles.preview} />}
+          {image && <Image source={{ uri: image }} style={styles.preview} />}
 
-        <TextInput
-          style={styles.input}
-          placeholder="Escreva uma legenda..."
-          value={description}
-          onChangeText={setDescription}
-          multiline
-        />
+          <TextInput
+            style={styles.input}
+            placeholder="Escreva uma legenda..."
+            value={description}
+            onChangeText={setDescription}
+            multiline
+          />
 
-        <TouchableOpacity style={styles.postButton} onPress={handlePost}>
-          <Text style={styles.postButtonText}>Publicar</Text>
-        </TouchableOpacity>
-      </View>
-    </SafeAreaView>
+          <TouchableOpacity style={styles.postButton} onPress={handlePost}>
+            <Text style={styles.postButtonText}>Publicar</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </DismissKeyboard>
   );
 }

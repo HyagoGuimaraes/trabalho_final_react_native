@@ -1,57 +1,76 @@
 import { createContext, useEffect, useState } from "react";
 import { Api } from "../service/api";
 import { useAuth } from "../auth/useAuth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface DietContextProps {
-  diet: Record<RefeicoesHorario, RefeicoesItem[]>;
+  diet: DietType | undefined;
   saveDiet: (
-    newDiet: Record<RefeicoesHorario, RefeicoesItem[]>
+    newDiet: Record<RefeicoesHorario, RefeicoesItem[]>,
+    totais: { calories: number; proteins: number; carbohydrates: number }
   ) => Promise<void>;
   removeFood: (horario: RefeicoesHorario, index: number) => void;
 }
 
 export const DietContext = createContext<DietContextProps>({
-  diet: { cafe: [], almoco: [], tarde: [], jantar: [], ceia: [] },
+  diet: undefined,
   saveDiet: async () => {},
   removeFood: () => {},
 });
 
 export const DietProvider = ({ children }: any) => {
-  const {  user } = useAuth();
+  const { user } = useAuth();
 
-  const [diet, setDiet] = useState<Record<RefeicoesHorario, RefeicoesItem[]>>({
-    cafe: [],
-    almoco: [],
-    tarde: [],
-    jantar: [],
-    ceia: [],
-  });
+  const [diet, setDiet] = useState<DietType | undefined>(undefined);
+
   useEffect(() => {
-    if (user?.diet) {
-      setDiet(user.diet as Record<RefeicoesHorario, RefeicoesItem[]>);
-      console.log("Dieta carregada do usuário:", user.diet);
-    }
-  }, [user]);
+    (async () => {
+      try {
+        const storedDiet = await AsyncStorage.getItem("diet");
+        if (storedDiet) {
+          setDiet(JSON.parse(storedDiet));
+          console.log("Dieta carregada do armazenamento");
+        }
+      } catch (error) {
+        console.error("Erro ao carregar dieta", error);
+      }
+    })();
+  }, []);
 
   const saveDiet = async (
-    newDiet: Record<RefeicoesHorario, RefeicoesItem[]>
+    newDiet: Record<RefeicoesHorario, RefeicoesItem[]>,
+    totais: { calories: number; proteins: number; carbohydrates: number }
   ) => {
     if (!user) return;
-    console.log("passou");
+
     try {
-      await Api.put(`/users/${user.id}`, { diet: newDiet });
-      console.log("Dieta salva no usuário");
-      setDiet(newDiet);
+      const dietToSave: DietType = {
+        refeicoes: newDiet,
+        totais,
+      };
+
+      await AsyncStorage.setItem("diet", JSON.stringify(dietToSave));
+      console.log("Dieta salva no AsyncStorage");
+
+      setDiet(dietToSave);
     } catch (err) {
       console.error("Erro ao salvar dieta", err);
     }
   };
 
   const removeFood = (horario: RefeicoesHorario, index: number) => {
-    setDiet((prev) => ({
-      ...prev,
-      [horario]: prev[horario].filter((_, i) => i !== index),
-    }));
+    if (!diet) return;
+
+    const updated = {
+      ...diet,
+      refeicoes: {
+        ...diet.refeicoes,
+        [horario]: diet.refeicoes[horario].filter((_, i) => i !== index),
+      },
+    };
+
+    setDiet(updated);
+    AsyncStorage.setItem("diet", JSON.stringify(updated));
   };
 
   return (
