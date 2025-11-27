@@ -63,6 +63,7 @@ export default function Post() {
       userAvatar: user.avatar || "https://i.imgur.com/placeholder.png",
       image,
       description,
+      shared: true,
     };
 
     const saved = await createPost(newPost);

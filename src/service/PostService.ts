@@ -6,8 +6,12 @@ export interface Post {
   username: string;
   userAvatar?: string;
   description: string;
-  image: string; 
+  image: string;
   createdAt?: string;
+  shared: boolean;
+  likes?: number;
+  likedByUser?: boolean;
+  comments?: { user: string; text: string }[];
 }
 
 export const getPosts = async (): Promise<Post[]> => {
@@ -21,9 +25,6 @@ export const getPosts = async (): Promise<Post[]> => {
 };
 
 export const createPost = async (post: Post): Promise<Post | null> => {
-  // console.log(post.description)
-  // // console.log(post.id)
-  // console.log(post.userId)
   try {
     const response = await Api.post(`/post`, post);
     return response.data;

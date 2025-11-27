@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react"
 import { Alert } from "react-native";
 import { LoginUser } from "../service/LoginUser";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 interface PropsAuth {
   email: string
@@ -10,7 +11,8 @@ interface PropsAuth {
   setPassword: (value: string) => void;
   login: (email: string, password: string) => Promise<boolean>;
   getData: () => Promise<boolean>;
-  user: PropsUser | null;
+  user: PropsUser | null; 
+  logOut: () => Promise<boolean>;
 }
 
 interface PropsPost {
@@ -26,6 +28,8 @@ interface PropsUser {
   id: string;
   avatar?: string;
   post: PropsPost[];
+  weight: string,
+  height: string
 }
 
 const AuthContext = createContext<PropsAuth>({
@@ -35,14 +39,15 @@ const AuthContext = createContext<PropsAuth>({
   setPassword: () => { },
   login: async () => false,
   getData: async () => false,
-  user: { name: "", email: "", password: "", id: "", post: [] },
+  user: {name: "", email: "", password: "", id: "", post: [], weight: "", height: ""},
+  logOut: async () => false,
 })
 
 interface AuthProps {
   children: React.ReactNode
 }
-export const AuthProviders = ({ children }: AuthProps) => {
-
+export const AuthProviders = ({children}: AuthProps) => {
+  const navigation = useNavigation();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [user, setUser] = useState<PropsUser | null>(null)
@@ -62,6 +67,7 @@ export const AuthProviders = ({ children }: AuthProps) => {
       if (value) {
         const userStorage: PropsUser = JSON.parse(value)
         setUser(userStorage)
+        navigation.navigate("StackHome")
         return true
       }
       else {
@@ -91,8 +97,17 @@ export const AuthProviders = ({ children }: AuthProps) => {
     }
   }
 
+  const logOut = async () => {
+    try {
+      await AsyncStorage.removeItem('@user')
+      return true;
+    } catch (error) {
+      return false
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ email, setEmail, password, setPassword, login, getData, user }}>
+    <AuthContext.Provider value={{email, setEmail, password, setPassword, login, getData, user, logOut}}>
       {children}
     </AuthContext.Provider>
   )

@@ -4,10 +4,12 @@ interface PropsRegister {
   name: string;
   email: string;
   password: string;
+  height: string;
+  weight: string;
 }
-export const RegisterUser = async ({ name, email, password }: PropsRegister) => {
+export const RegisterUser = async ({ name, email, password, height, weight }: PropsRegister) => {
 
-  const data = { name, email, password }
+  const data = { name, email, password, height, weight }
 
   try {
     const response = await Api.post('/users', data)
