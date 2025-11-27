@@ -59,6 +59,29 @@ export const styles = StyleSheet.create({
     marginVertical: 2,
   },
 
+  macroRow: {
+    flexDirection: "row",
+    gap: 6,
+    marginTop: 2,
+  },
+
+  macroItem: {
+    fontSize: 12,
+    color: "#666",
+  },
+
+  qtInput: {
+    width: 60,
+    height: 40,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 6,
+    textAlign: "center",
+    marginRight: 10,
+    fontSize: 15,
+    backgroundColor: "#fff",
+  },
+
   itemRow: {
     flexDirection: "row",
     justifyContent: "space-between",

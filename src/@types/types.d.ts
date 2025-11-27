@@ -3,7 +3,7 @@ type FoodItem = {
   name: string;
   calories: number;
   imageUrl?: string
-  proteins: number;    
+  proteins: number;
   carbohydrates: number;
 };
 
@@ -13,15 +13,17 @@ type RefeicoesItem = {
   horario: RefeicoesHorario;
   alimento: FoodItem;
   quantidade?: number;
-};
-type NutrimentDetails = {
-    "energy-kcal_100g"?: number;
-    "proteins_100g"?: number;
-    "carbohydrates_100g"?: number;
-    [key: string]: any; 
+  alimentoOriginal?: FoodItem;
 };
 
-type OpenFoodFactsResponse = {  
+type NutrimentDetails = {
+  "energy-kcal_100g"?: number;
+  "proteins_100g"?: number;
+  "carbohydrates_100g"?: number;
+  [key: string]: any;
+};
+
+type OpenFoodFactsResponse = {
   _id?: string;
   product_name: string;
   nutriments: NutrimentDetails;
@@ -29,5 +31,21 @@ type OpenFoodFactsResponse = {
 };
 
 type AuthContextProps = {
-  saveDiet: (diet: Record<RefeicoesHorario, RefeicoesItem[]>) => void;
+  saveDiet: (diet: {
+    refeicoes: Record<RefeicoesHorario, RefeicoesItem[]>;
+    totais: {
+      calories: number;
+      proteins: number;
+      carbohydrates: number;
+    }
+  }) => void;
+};
+
+type DietType = {
+  refeicoes: Record<RefeicoesHorario, RefeicoesItem[]>;
+  totais: {
+    calories: number;
+    proteins: number;
+    carbohydrates: number;
+  };
 };

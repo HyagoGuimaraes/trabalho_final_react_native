@@ -45,6 +45,18 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
   },
 
+  inputQt: {
+    width: "100%",
+    height: 45,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    marginTop: 10,
+    fontSize: 16,
+    backgroundColor: "#fff",
+  },
+
   resultsContainer: {
     maxHeight: 250,
     marginTop: 10,

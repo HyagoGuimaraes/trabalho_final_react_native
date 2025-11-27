@@ -11,7 +11,7 @@ import * as ImagePicker from "expo-image-picker";
 import { createPost } from "../../service/PostService";
 import { styles } from "./style";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useAuth } from "../../Auth/useAuth";
+import { useAuth } from "../../auth/useAuth";
 import { ImageManipulator } from "expo-image-manipulator";
 import DismissKeyboard from "../../components/Keyboard/DismissKeyboard";
 
