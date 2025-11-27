@@ -44,17 +44,11 @@ export const DietProvider = ({ children }: any) => {
     if (!user) return;
 
     try {
-      // Cria o objeto completo
       const dietToSave: DietType = {
         refeicoes: newDiet,
         totais,
       };
 
-      // // Salva na API
-      // await Api.put(`/users/${user.id}`, { diet: dietToSave });
-      // console.log("Dieta salva no usuário");
-
-      // Salva localmente
       await AsyncStorage.setItem("diet", JSON.stringify(dietToSave));
       console.log("Dieta salva no AsyncStorage");
 

@@ -34,11 +34,7 @@ export default function Home() {
             <View style={styles.imagemContainer}>
               <Image source={{ uri: post.image }} style={styles.postImage} />
             </View>
-
-            <View style={styles.descriptionContainer}>
               <Text style={styles.description}>{post.description}</Text>
-            </View>
-
           </View>
         ))}
       </ScrollView>

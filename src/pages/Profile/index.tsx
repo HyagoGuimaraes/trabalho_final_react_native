@@ -1,9 +1,19 @@
 import { useMemo, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, TouchableOpacity, Modal, TextInput, FlatList, Alert, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  TextInput,
+  FlatList,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { styles } from "./style";
 import { useUser } from "../../hooks/useUser";
 import type { DietaryPreference } from "../../@types/user";
+import DismissKeyboard from "../../components/Keyboard/DismissKeyboard";
 
 const PREF_OPTIONS: DietaryPreference[] = [
   "onivoro",
@@ -47,19 +57,19 @@ export default function Profile() {
   const onSave = async () => {
     const w = parseFloat(weight);
     const g = parseFloat(goal);
+
     if (!name.trim() || isNaN(w) || isNaN(g)) {
-      Alert.alert(
-        "Campos inválidos",
-        "Preencha nome, peso e meta corretamente."
-      );
+      Alert.alert("Campos inválidos", "Preencha nome, peso e meta corretamente.");
       return;
     }
+
     await updateProfile({
       name,
       weightKg: w,
       goalWeightKg: g,
       dietaryPreferences: prefs,
     });
+
     setOpenEdit(false);
     Alert.alert("Perfil atualizado", "Suas alterações foram salvas.");
   };
@@ -89,11 +99,13 @@ export default function Profile() {
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Meta diária</Text>
           <Text style={styles.goalText}>{profile.dailyCaloriesGoal} kcal</Text>
+
           <View style={styles.progressBar}>
             <View
               style={[styles.progressFill, { width: `${progress * 100}%` }]}
             />
           </View>
+
           <Text style={styles.progressLabel}>
             Consumidas hoje: {daily.caloriesConsumed} kcal (
             {Math.round(progress * 100)}%)
@@ -134,89 +146,95 @@ export default function Profile() {
         </TouchableOpacity>
       </View>
 
+      {/* -------- MODAL COM DismissKeyboard -------- */}
       <Modal visible={openEdit} animationType="slide" transparent>
         <View style={styles.modalBackdrop}>
-          <View style={styles.modal}>
-            <Text style={styles.modalTitle}>Editar perfil</Text>
+          <DismissKeyboard>
+            <View style={styles.modal}>
+              <Text style={styles.modalTitle}>Editar perfil</Text>
 
-            <Text style={styles.inputLabel}>Nome</Text>
-            <TextInput
-              style={styles.input}
-              value={name}
-              onChangeText={setName}
-              placeholder="Seu nome"
-              placeholderTextColor="#9CA3AF"
-            />
+              <Text style={styles.inputLabel}>Nome</Text>
+              <TextInput
+                style={styles.input}
+                value={name}
+                onChangeText={setName}
+                placeholder="Seu nome"
+                placeholderTextColor="#9CA3AF"
+              />
 
-            <View style={styles.row}>
-              <View style={styles.col}>
-                <Text style={styles.inputLabel}>Peso atual (kg)</Text>
-                <TextInput
-                  style={styles.input}
-                  value={weight}
-                  onChangeText={setWeight}
-                  keyboardType="numeric"
-                  placeholder="84"
-                  placeholderTextColor="#9CA3AF"
-                />
+              <View style={styles.row}>
+                <View style={styles.col}>
+                  <Text style={styles.inputLabel}>Peso atual (kg)</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={weight}
+                    onChangeText={setWeight}
+                    keyboardType="numeric"
+                    placeholder="84"
+                    placeholderTextColor="#9CA3AF"
+                  />
+                </View>
+
+                <View style={styles.col}>
+                  <Text style={styles.inputLabel}>Meta (kg)</Text>
+                  <TextInput
+                    style={styles.input}
+                    value={goal}
+                    onChangeText={setGoal}
+                    keyboardType="numeric"
+                    placeholder="78"
+                    placeholderTextColor="#9CA3AF"
+                  />
+                </View>
               </View>
-              <View style={styles.col}>
-                <Text style={styles.inputLabel}>Meta (kg)</Text>
-                <TextInput
-                  style={styles.input}
-                  value={goal}
-                  onChangeText={setGoal}
-                  keyboardType="numeric"
-                  placeholder="78"
-                  placeholderTextColor="#9CA3AF"
-                />
-              </View>
-            </View>
 
-            <Text style={styles.inputLabel}>Preferências</Text>
-            <FlatList
-              data={PREF_OPTIONS}
-              keyExtractor={(item) => item}
-              numColumns={2}
-              columnWrapperStyle={{ gap: 8 }}
-              contentContainerStyle={{ gap: 8 }}
-              renderItem={({ item }) => {
-                const active = prefs.includes(item);
-                return (
-                  <TouchableOpacity
-                    onPress={() => togglePref(item)}
-                    activeOpacity={0.7}
-                    style={[styles.prefItem, active && styles.prefItemActive]}
-                  >
-                    <Text
-                      style={[styles.prefText, active && styles.prefTextActive]}
+              <Text style={styles.inputLabel}>Preferências</Text>
+              <FlatList
+                data={PREF_OPTIONS}
+                keyExtractor={(item) => item}
+                numColumns={2}
+                columnWrapperStyle={{ gap: 8 }}
+                contentContainerStyle={{ gap: 8 }}
+                renderItem={({ item }) => {
+                  const active = prefs.includes(item);
+                  return (
+                    <TouchableOpacity
+                      onPress={() => togglePref(item)}
+                      activeOpacity={0.7}
+                      style={[styles.prefItem, active && styles.prefItemActive]}
                     >
-                      {item.replace("_", " ")}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              }}
-            />
+                      <Text
+                        style={[styles.prefText, active && styles.prefTextActive]}
+                      >
+                        {item.replace("_", " ")}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                }}
+              />
 
-            <View style={styles.modalActions}>
-              <TouchableOpacity
-                style={styles.cancel}
-                onPress={() => setOpenEdit(false)}
-                activeOpacity={0.7}
-              >
-                <Text style={styles.cancelText}>Cancelar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.save}
-                onPress={onSave}
-                activeOpacity={0.8}
-              >
-                <Text style={styles.saveText}>Salvar</Text>
-              </TouchableOpacity>
+              <View style={styles.modalActions}>
+                <TouchableOpacity
+                  style={styles.cancel}
+                  onPress={() => setOpenEdit(false)}
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.cancelText}>Cancelar</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.save}
+                  onPress={onSave}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.saveText}>Salvar</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          </DismissKeyboard>
         </View>
       </Modal>
+      {/* -------------------------------------------- */}
     </SafeAreaView>
   );
 }
