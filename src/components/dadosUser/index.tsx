@@ -4,7 +4,7 @@ import { styles } from "./style"
 interface PropsDados {
     titulo: string,
     dado: undefined | string,
-    sufix: string
+    sufix?: string
 }
 export const DadosUser = ({titulo, dado, sufix}: PropsDados) => {
     return (

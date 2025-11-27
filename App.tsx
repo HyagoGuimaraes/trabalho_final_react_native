@@ -7,8 +7,8 @@ export default function App() {
     <DietProvider>
 
       <StatusBar
-        barStyle="light-content"
-        backgroundColor="black"
+        barStyle="dark-content"
+        backgroundColor="white"
         translucent={false}
       />
       <Routers />
