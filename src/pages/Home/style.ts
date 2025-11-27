@@ -3,28 +3,45 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
+    backgroundColor: "#F4FFE9",
+  },
+
+  /* Header */
+  header: {
     width: "100%",
-    backgroundColor: '#F4FFE9'    
-  },
-
-  imagemContainer: {
-    flex: 1,
+    paddingTop: 45,
+    paddingBottom: 12,
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 10,
-
+    borderBottomWidth: 0.3,
+    borderColor: "#cfcfcf",
+    marginBottom: 15,
+    backgroundColor: "#fff",
   },
 
+  headerTitle: {
+    fontSize: 26,
+    fontWeight: "700",
+  },
+
+  headerIcons: {
+    flexDirection: "row",
+    gap: 15,
+  },
+
+  /* Post */
   postContainer: {
     backgroundColor: "#fff",
-    marginTop: 50,
+    marginBottom: 30,
     borderRadius: 14,
     overflow: "hidden",
     shadowColor: "#000",
     shadowOpacity: 0.08,
     shadowRadius: 4,
-    elevation: 3,
-    width: "100%"
+    elevation: 4,
+    width: "100%",
   },
 
   postHeader: {
@@ -34,36 +51,35 @@ export const styles = StyleSheet.create({
   },
 
   avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 42,
+    height: 42,
+    borderRadius: 21,
     marginRight: 10,
   },
 
   username: {
     fontWeight: "bold",
-    fontSize: 15,
+    fontSize: 16,
+    color: "#333",
+  },
+
+  imagemContainer: {
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: "#eee",
   },
 
   postImage: {
-    width: 350,
-    height: 250,
-    borderRadius: 20    
+    width: "95%",
+    height: 260,
+    marginVertical: 10,
+    borderRadius: 14,
   },
 
   description: {
-    padding: 20,
-    fontSize: 30,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    fontSize: 15,
     color: "#000",
-    height: 100,
-    textAlign: 'center',
-    
-  },
-
-  date: {
-    paddingLeft: 10,
-    paddingBottom: 8,
-    color: "#777",
-    fontSize: 12,
   },
 });
