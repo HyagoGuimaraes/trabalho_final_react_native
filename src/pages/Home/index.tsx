@@ -88,12 +88,12 @@ export default function Home() {
           <View style={styles.postContainer}>
          
             <View style={styles.postHeader}>
-              <Image source={{ uri: item.userAvatar }} style={styles.avatar} />
+              <Image source={{ uri: item.userAvatar || "https://i.imgur.com/placeholder.png" }} style={styles.avatar} />
               <Text style={styles.username}>{item.username}</Text>
             </View>
 
             
-            <Image source={{ uri: item.image }} style={styles.postImage} />
+            <Image source={{ uri: item.image}} style={styles.postImage} />
 
            
             <View style={styles.postActions}>
