@@ -32,13 +32,13 @@ export default function Profile() {
           <Text style={styles.titulo}>Dados do Usuario</Text>
         </View>
         <View style={styles.dados}>
-          <DadosUser titulo="Email de Contato" dado={user?.email} sufix="Cm"/>
+          <DadosUser titulo="Email de Contato" dado={user?.email} />
           <DadosUser titulo="Peso" dado={user?.weight} sufix="Kg" />
           <DadosUser titulo="Altura" dado={user?.height} sufix="Cm"/>
         </View>
       </View>
       <TouchableOpacity onPress={sair} style={styles.button}>
-        <Text style={styles.buttonText}>Logout</Text>
+        <Text style={styles.buttonText}>Sair</Text>
       </TouchableOpacity>
     </View>
   );

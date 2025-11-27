@@ -48,14 +48,20 @@ export const styles = StyleSheet.create({
   },
 
   button: {
-    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 50,
     borderWidth: 1,
-    width: 60,
-    marginLeft: 20
+    width: 100,
+    height: 50,
+    marginLeft: 40,
+    backgroundColor: '#8BC34A',
+    borderRadius: 20
   },
 
   buttonText: {
-    fontSize: 15
+    fontSize: 25,
+    fontWeight: 'bold'
   }
 
 });
