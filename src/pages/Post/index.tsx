@@ -62,6 +62,7 @@ export default function Post() {
       username: user.name,
       image,
       description,
+      shared: true
     };
 
     const saved = await createPost(newPost);
