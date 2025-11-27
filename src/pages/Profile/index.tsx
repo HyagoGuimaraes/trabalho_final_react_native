@@ -2,7 +2,7 @@ import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import { useAuth } from "../../auth/useAuth";
 import image from '../../assets/image.png'
 import { styles } from "./style";
-import { DadosUser } from "../../components/DadosUser";
+import { DadosUser } from "../../components/dadosUser";
 import { useNavigation } from "@react-navigation/native";
 
 

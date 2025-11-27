@@ -10,10 +10,13 @@ import { styles } from "./style";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { Image } from "react-native";
+import { useAuth } from "../auth/useAuth";
 
 const Tab = createBottomTabNavigator<TabList>();
 
 export const TabsRouters = () => {
+  const { user } = useAuth();
   return (
     <Tab.Navigator
       screenOptions={() => ({
@@ -91,7 +94,7 @@ export const TabsRouters = () => {
         options={{
           tabBarIcon: ({ focused, size }) => (
             <View style={styles.viewButton}>
-              <MaterialCommunityIcons name="account" size={40}  color={focused ? "#000" : "#fff"} />
+                <MaterialCommunityIcons name="account" size={40}  color={focused ? "#000" : "#fff"} />
               <Text
                 style={[
                   styles.tabLabel,
