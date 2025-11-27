@@ -20,7 +20,6 @@ interface PropsPost {
 }
 
 interface PropsUser {
-  diet: Record<RefeicoesHorario, RefeicoesItem[]>;
   name: string,
   email: string,
   password: string,
