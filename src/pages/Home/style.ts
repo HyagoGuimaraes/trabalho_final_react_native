@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "#F4FFE9",
   },
 
-  /* Header */
   header: {
     width: "100%",
     paddingTop: 45,
@@ -25,7 +24,6 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
   },
 
-  /* Post */
   postContainer: {
     backgroundColor: "#fff",
     marginBottom: 20,
@@ -56,14 +54,10 @@ export const styles = StyleSheet.create({
     marginLeft: 10,
   },
 
-  imagemContainer: {
-    width: "100%",
-    backgroundColor: "#eee",
-  },
-
   postImage: {
-    width: "100%", // Agora ocupa todo o post
-    height: 300, // Pouco maior (estilo feed)
+    width: "100%",
+    height: 300,
+    backgroundColor: "#eee",
   },
 
   postActions: {
@@ -76,15 +70,17 @@ export const styles = StyleSheet.create({
     marginLeft: 20,
   },
 
+  likesText: {
+    fontWeight: "bold",
+    fontSize: 14,
+    marginLeft: 15,
+    marginTop: 5,
+  },
+
   postDate: {
     fontSize: 12,
     color: "#777",
     marginLeft: 15,
-  },
-
-  usernameDesc: {
-    fontWeight: "bold",
-    fontSize: 15,
   },
 
   description: {
@@ -93,10 +89,15 @@ export const styles = StyleSheet.create({
     paddingBottom: 10,
   },
 
-  likesText: {
+  usernameDesc: {
     fontWeight: "bold",
+    fontSize: 15,
+  },
+
+  commentText: {
     fontSize: 14,
-    marginLeft: 15,
-    marginTop: 5,
+    paddingHorizontal: 15,
+    paddingVertical: 2,
+    color: "#333",
   },
 });

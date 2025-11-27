@@ -5,10 +5,13 @@ import { Feather } from "@expo/vector-icons";
 import { getPosts, Post } from "../../service/PostService";
 import { styles } from "./style";
 import { useAuth } from "../../auth/useAuth";
+import { CommentModal } from "../../components/CommentModal"; 
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
   const { user } = useAuth();
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
   useEffect(() => {
     loadPosts();
@@ -16,7 +19,6 @@ export default function Home() {
 
   const loadPosts = async () => {
     const data = await getPosts();
-    // console.log("POSTS RECEBIDOS DA API:", data);
     if (data) {
       setPosts(data.reverse());
     }
@@ -39,22 +41,35 @@ export default function Home() {
   };
 
   const handleComment = (postId: string) => {
-    console.log("Abrir comentários do post:", postId);
-    // Aqui você pode abrir modal ou navegar pra tela de comentários
-    // Exemplo se tiver React Navigation:
-    // navigation.navigate("Comments", { postId })
+    setSelectedPostId(postId);
+    setIsCommentModalOpen(true);
   };
 
+  const handleSubmitComment = (comment: string) => {
+    if (!selectedPostId) return;
+
+    setPosts((prev) =>
+      prev.map((item) => {
+        if (item.id === selectedPostId) {
+          return {
+            ...item,
+            comments: [...(item.comments || []), { user: user?.name || "Você", text: comment }],
+          };
+        }
+        return item;
+      })
+    );
+
+    setIsCommentModalOpen(false);
+  };
 
   return (
     <View style={styles.container}>
-
       <LinearGradient
         colors={["#fff", "#e8e8e8"]}
         style={styles.header}
       >
         <Text style={styles.headerTitle}>MyDietGram</Text>
-
       </LinearGradient>
 
       <FlatList
@@ -88,7 +103,6 @@ export default function Home() {
               </TouchableOpacity>
             </View>
 
-
             {item.likes !== undefined && item.likes > 0 && (
               <Text style={styles.likesText}>{item.likes} curtidas</Text>
             )}
@@ -103,10 +117,26 @@ export default function Home() {
               <Text style={styles.usernameDesc}>{item.username} </Text>
               {item.description}
             </Text>
+
+            {item.comments && item.comments.length > 0 && (
+              <View style={{ marginTop: 8 }}>
+                {item.comments.map((c, index) => (
+                  <Text key={index} style={styles.commentText}>
+                    <Text style={styles.usernameDesc}>{c.user} </Text>
+                    {c.text}
+                  </Text>
+                ))}
+              </View>
+            )}
           </View>
         )}
       />
 
+      <CommentModal
+        isOpen={isCommentModalOpen}
+        onClose={() => setIsCommentModalOpen(false)}
+        onSubmit={handleSubmitComment}
+      />
     </View>
   );
 }
