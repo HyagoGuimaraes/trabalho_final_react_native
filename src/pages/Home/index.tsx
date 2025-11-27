@@ -5,7 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { getPosts, Post } from "../../service/PostService";
 import { styles } from "./style";
 import { useAuth } from "../../auth/useAuth";
-import { CommentModal } from "../../components/CommentModal"; 
+import { CommentModal } from "../../components/CommentModal";
 
 export default function Home() {
   const [posts, setPosts] = useState<Post[]>([]);
