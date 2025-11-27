@@ -9,18 +9,12 @@ import { styles } from "./style";
 import DismissKeyboard from "../../components/Keyboard/DismissKeyboard";
 
 export const Login = () => {
-  const { getData, user } = useAuth();
-  const navigation = useNavigation();
+  
+  const {getData, user} = useAuth();
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useEffect(() => {getData()}, [])
 
-  useEffect(() => {
-    if (user) {
-      navigation.navigate("StackHome");
-    }
-  }, [user, navigation]);
+ 
 
   return (
     <DismissKeyboard>

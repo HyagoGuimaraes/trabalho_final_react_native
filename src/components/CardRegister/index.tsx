@@ -9,6 +9,8 @@ export const CardRegister = () => {
   const navigation = useNavigation();
 
   const [name, setName] = useState("");
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
@@ -16,7 +18,7 @@ export const CardRegister = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const cadastrar = async () => {
-    if (!name || !surname || !email || !password) {
+    if (!name || !surname || !email || !password || !weight || !height) {
       Alert.alert("Preencha todos os campos!");
       return;
     }
@@ -33,7 +35,7 @@ export const CardRegister = () => {
 
     try {
 
-      const data = {name: `${name} ${surname}`, email, password}
+      const data = {name: `${name} ${surname}`, email, password, weight, height}
 
       const response = await RegisterUser(data)
 
@@ -57,12 +59,29 @@ export const CardRegister = () => {
           value={name}
           onChangeText={setName}
         />
+        
         <TextInput
           placeholderTextColor={"black"}
           placeholder="Sobrenome"
           style={styles.input}
           value={surname}
           onChangeText={setSurname}
+        />
+        
+        <TextInput
+          placeholderTextColor={"black"}
+          placeholder="Altura"
+          style={styles.input}
+          value={height}
+          onChangeText={setHeight}
+        />
+        
+        <TextInput
+          placeholderTextColor={"black"}
+          placeholder="Peso"
+          style={styles.input}
+          value={weight}
+          onChangeText={setWeight}
         />
 
         <TextInput
